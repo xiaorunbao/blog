@@ -99,7 +99,7 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: landscape
-theme: yilia
+theme: jekyll-theme-dinky
 jsonContent:
   meta: false
   pages: false
