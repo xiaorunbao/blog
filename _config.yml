@@ -99,7 +99,7 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 # theme: landscape
-theme: jekyll-theme-dinky
+theme: fluid
 jsonContent:
   meta: false
   pages: false
@@ -123,5 +123,5 @@ jsonContent:
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/xiaorunbao/rainbow.github.io.git
+  repository: https://github.com/xiaorunbao/xiaorunbao.github.io.git
   branch: master
