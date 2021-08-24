@@ -1,5 +1,7 @@
 ---
 title: docker安装mongo
+layout: post
+date: 2021-03-19
 ---
 
 ## docker 拉取镜像和容器启动

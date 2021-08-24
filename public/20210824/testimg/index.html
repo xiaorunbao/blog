@@ -18,7 +18,7 @@
   <meta name="author" content="xiaorunbao">
   <meta name="keywords" content="">
   
-  <title>docker安装mongo - s@rainbow</title>
+  <title>testimg - s@rainbow</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -139,7 +139,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="docker安装mongo">
+            <span class="h2" id="subtitle" title="testimg">
               
             </span>
 
@@ -149,8 +149,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-19 08:18" pubdate>
-        2021年3月19日 早上
+      <time datetime="2021-08-24 13:49" pubdate>
+        2021年8月24日 下午
       </time>
     </span>
   
@@ -161,7 +161,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      279 字
+      0 字
     </span>
   
 
@@ -171,7 +171,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      1
        分钟
     </span>
   
@@ -201,60 +201,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">docker安装mongo</h1>
+            <h1 style="display: none">testimg</h1>
             
             <div class="markdown-body">
-              <h2 id="docker-拉取镜像和容器启动"><a href="#docker-拉取镜像和容器启动" class="headerlink" title="docker 拉取镜像和容器启动"></a>docker 拉取镜像和容器启动</h2><h3 id="获取-mongo-镜像"><a href="#获取-mongo-镜像" class="headerlink" title="获取 mongo 镜像"></a>获取 mongo 镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull mongo<br></code></pre></td></tr></table></figure>
-
-<h3 id="创建-volume-映射"><a href="#创建-volume-映射" class="headerlink" title="创建 volume 映射"></a>创建 volume 映射</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker volume create mongodb<br>docker volume create mongodb_config<br><br>docker network create mongodb<br></code></pre></td></tr></table></figure>
-
-<h3 id="创建-network-映射"><a href="#创建-network-映射" class="headerlink" title="创建 network 映射"></a>创建 network 映射</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker network create mongodb<br></code></pre></td></tr></table></figure>
-
-<h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -it -d -v mongodb:/data/db \<br> -v mongodb_config:/data/configdb -p 27017:27017 \<br> --network mongodb \<br> --name mongodb \<br> mongo<br></code></pre></td></tr></table></figure>
-
-<h2 id="设置-mongo-登录用户密码"><a href="#设置-mongo-登录用户密码" class="headerlink" title="设置 mongo 登录用户密码"></a>设置 mongo 登录用户密码</h2><h3 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it mongodb bash<br></code></pre></td></tr></table></figure>
-
-<h3 id="使用-admin-库（database）"><a href="#使用-admin-库（database）" class="headerlink" title="使用 admin 库（database）"></a>使用 admin 库（database）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">use admin<br></code></pre></td></tr></table></figure>
-
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><blockquote>
-<p>user: 用户名</p>
-<p>pwd: 密码</p>
-<p>role 角色配置，此处直接使用 admin 管理员权限</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">db.createUser(&#123;user: <span class="hljs-string">&quot;admin&quot;</span>,<span class="hljs-built_in">pwd</span>: <span class="hljs-string">&quot;123456&quot;</span>,roles: [ &#123; role: <span class="hljs-string">&quot;userAdminAnyDatabase&quot;</span>, db: <span class="hljs-string">&quot;admin&quot;</span>&#125;]&#125;)<br></code></pre></td></tr></table></figure>
-
-<h2 id="远程连接和端口配置"><a href="#远程连接和端口配置" class="headerlink" title="远程连接和端口配置"></a>远程连接和端口配置</h2><h3 id="配置端口映射（暴露端口号）"><a href="#配置端口映射（暴露端口号）" class="headerlink" title="配置端口映射（暴露端口号）"></a>配置端口映射（暴露端口号）</h3><blockquote>
-<p>NOTE: 虚拟机没有防火墙安全策略配置的，默认开放全部端口。如 果有防火墙配置，此处不映射端口，不能远程连接。</p>
-</blockquote>
-<ol>
-<li>查看防火墙状态</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo firewall-cmd --state<br></code></pre></td></tr></table></figure>
-
-<p><img src="/.com//20210323091547.png" srcset="/img/loading.gif" lazyload alt="显示状态"></p>
-<ol start="2">
-<li>查看指定端口是否开发</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo firewall-cmd --query-port=8080/tcp<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>端口改为想要的端口</p>
-</blockquote>
-<p><img src="/.com//20210323091932.png" srcset="/img/loading.gif" lazyload alt="显示状态"></p>
-<ol start="3">
-<li>开发 mongo 默认端口</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo  firewall-cmd --zone=public --add-port=27017/tcp --permanent<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>permanent: 永久有效</p>
-</blockquote>
-<ol start="4">
-<li>查询端口状态</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo firewall-cmd --query-port=27017/tcp<br></code></pre></td></tr></table></figure>
-
-<p><img src="/.com//20210323092306.png" srcset="/img/loading.gif" lazyload alt="显示状态"></p>
+              <p><img src="20210323092306.png" srcset="/img/loading.gif" lazyload alt="显示状态"></p>
 
             </div>
             <hr>
@@ -275,18 +225,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/20210326/%E8%91%97%E5%90%8D%E5%AE%9A%E5%BE%8B/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">著名定律</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/20201202/hello-world/">
-                        <span class="hidden-mobile">Hello World</span>
+                      <a href="/20210823/docker%E5%AE%89%E8%A3%85mongo/">
+                        <span class="hidden-mobile">docker安装mongo</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
