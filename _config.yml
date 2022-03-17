@@ -123,5 +123,5 @@ jsonContent:
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repository: https://github.com/xiaorunbao/xiaorunbao.github.io.git
+  repo: git@github.com:xiaorunbao/xiaorunbao.github.io.git
   branch: master
