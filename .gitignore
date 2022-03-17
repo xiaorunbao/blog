@@ -22,6 +22,3 @@ yarn.lock
 *.ntvs*
 *.njsproj
 *.sln
-
-# blog content
-public
