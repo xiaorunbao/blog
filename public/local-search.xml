@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Windows上git换行符LF-CRLF问题</title>
+    <link href="/20220317/Windows%E4%B8%8Agit%E6%8D%A2%E8%A1%8C%E7%AC%A6LF-CRLF%E9%97%AE%E9%A2%98/"/>
+    <url>/20220317/Windows%E4%B8%8Agit%E6%8D%A2%E8%A1%8C%E7%AC%A6LF-CRLF%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<p>最近重装了系统，因为 PO 用的 mac，所以在 Windows 上下载完代码插件就会大量报错。<br><img src="err_104923.png" alt="错误"></p><h1 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h1><p>在不同的操作系统中，换行符并不统一，Linux 系统中使用 0x0D0A(CRLF),而 MAC OS 系统起初使用 0x0D(CR) 后来和 Linux 系统保持一致。 而 git 默认采用 Linux 的换行符。</p><p>git 为了解决不同平台换行符不一致的问题，在 windows 操作系统中默认在检出代码时将 LF 转换为 CRLF,而在提交的时候再转换为 LF，但是看似完美的解决方案在中文环境中却失效了。</p><h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="方案一：编译器设置"><a href="#方案一：编译器设置" class="headerlink" title="方案一：编译器设置"></a>方案一：编译器设置</h2><p><img src="494869038.png" alt="编译器设置"></p><h2 id="方案二："><a href="#方案二：" class="headerlink" title="方案二："></a>方案二：</h2><h3 id="git-的相关参数：eol-autocrlf-safecrlf"><a href="#git-的相关参数：eol-autocrlf-safecrlf" class="headerlink" title="git 的相关参数：eol autocrlf safecrlf"></a>git 的相关参数：eol autocrlf safecrlf</h3><ul><li>eol: 设置工作目录中文件的换行符，有三个值 lf, crlf 和 native（默认，同操作系统）</li><li>autocrlf:<ul><li>true 表示检出是转换 CRLF, 提交时转换为 LF</li><li>input 表示检出是不转换，提交时转换为 LF</li><li>false 表示不做转换</li></ul></li><li>safecrlf:<ul><li>true 表示不允许提交时包含不同换行符</li><li>warn 则只在有不同换行符时警告</li><li>false 则允许提价时有不同换行符存在</li></ul></li></ul><h4 id="AutoCRLF"><a href="#AutoCRLF" class="headerlink" title="AutoCRLF"></a>AutoCRLF</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#提交时转换为LF，检出时转换为CRLF</span><br>git config --global core.autocrlf <span class="hljs-literal">true</span><br><br><span class="hljs-comment">#提交时转换为LF，检出时不转换</span><br>git config --global core.autocrlf input<br><br><span class="hljs-comment">#提交检出均不转换</span><br>git config --global core.autocrlf <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure><h4 id="SafeCRLF"><a href="#SafeCRLF" class="headerlink" title="SafeCRLF"></a>SafeCRLF</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#拒绝提交包含混合换行符的文件</span><br>git config --global core.safecrlf <span class="hljs-literal">true</span><br><br><span class="hljs-comment">#允许提交包含混合换行符的文件</span><br>git config --global core.safecrlf <span class="hljs-literal">false</span><br><br><span class="hljs-comment">#提交包含混合换行符的文件时给出警告</span><br>git config --global core.safecrlf warn<br></code></pre></td></tr></table></figure><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>对于 Windows 系统，可以将 Git 客户端配置为将行结束符转换为 CRLF 格式，同时退出，并在提交操作时将其转换回 LF 格式。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global core.autocrlf <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure><p>对于 GNU/Linux 或 Mac OS，我们可以配置 Git 客户端，以便在执行提交时从 CRLF 转换为 LF。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global core.autocrlf input<br></code></pre></td></tr></table></figure><h2 id="问题解决-愉快的码代码吧！"><a href="#问题解决-愉快的码代码吧！" class="headerlink" title="问题解决 愉快的码代码吧！"></a>问题解决 愉快的码代码吧！</h2><p><img src="111459.png" alt="问题解决"></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>著名定律</title>
     <link href="/20210326/%E8%91%97%E5%90%8D%E5%AE%9A%E5%BE%8B/"/>
     <url>/20210326/%E8%91%97%E5%90%8D%E5%AE%9A%E5%BE%8B/</url>
@@ -35,19 +48,6 @@
     <url>/20201202/hello-world/</url>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Windows10、VM15安装centOS7</title>
-    <link href="/20201201/Windows10%E3%80%81VM15%E5%AE%89%E8%A3%85centOS7/"/>
-    <url>/20201201/Windows10%E3%80%81VM15%E5%AE%89%E8%A3%85centOS7/</url>
-    
-    <content type="html"><![CDATA[]]></content>
     
     
     
