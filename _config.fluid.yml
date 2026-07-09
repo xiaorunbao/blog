@@ -305,8 +305,8 @@ navbar:
     - { key: "home", link: "/", icon: "iconfont icon-home-fill" }
     - { key: "archive", link: "/archives/", icon: "iconfont icon-archive-fill" }
     - {
-        key: "category",
-        link: "/categories/",
+        key: "react-rainbow-menu",
+        link: "/storybook/",
         icon: "iconfont icon-category-fill",
       }
     # - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
@@ -892,18 +892,6 @@ links:
         title: "Fluid Blog",
         intro: "主题博客",
         link: "https://hexo.fluid-dev.com/",
-        avatar: "/img/favicon.png",
-      }
-    - {
-        title: "Fluid Docs",
-        intro: "主题使用指南",
-        link: "https://hexo.fluid-dev.com/docs/",
-        avatar: "/img/favicon.png",
-      }
-    - {
-        title: "Fluid Repo",
-        intro: "主题 GitHub 仓库",
-        link: "https://github.com/fluid-dev/hexo-theme-fluid",
         avatar: "/img/favicon.png",
       }
 
