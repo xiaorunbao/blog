@@ -1,3 +1,14 @@
+---
+title: Storybook 与 Hexo 博客集成指南
+layout: post
+date: 2026-08-30
+categories:
+  - 前端开发
+tags:
+  - React
+  - 组件库
+---
+
 # 📖 Storybook 与 Hexo 博客集成指南
 
 ## 🎯 方案概述
@@ -77,8 +88,8 @@ hexo server
 
 访问：
 
-- 📚 文章页: http://localhost:4000/2026/07/09/react-rainbow-menu/
-- 🎮 Storybook: http://localhost:4000/storybook/
+- 📚 文章页: <http://localhost:4000/2026/07/09/react-rainbow-menu/>
+- 🎮 Storybook: <http://localhost:4000/storybook/>
 
 ---
 
@@ -316,4 +327,4 @@ git subtree push --prefix storybook-static origin gh-pages
 
 ---
 
-*最后更新: 2026-07-09 | 维护者: xiaorunbao*
+*最后更新: 2026-09-30 | 维护者: xiaorunbao*

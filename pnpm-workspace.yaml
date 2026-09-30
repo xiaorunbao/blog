@@ -1,0 +1,4 @@
+allowBuilds:
+  ejs: false
+  hexo-util: false
+  highlight.js: false
