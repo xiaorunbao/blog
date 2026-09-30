@@ -1,0 +1,542 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="xiaorunbao">
+  <meta name="keywords" content="">
+  
+  <title>Storybook 与 Hexo 博客集成指南 - rainbow</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>rainbow</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/storybook/">
+                <i class="iconfont icon-category-fill"></i>
+                react-rainbow-menu
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Storybook 与 Hexo 博客集成指南">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2026-08-30 00:00" pubdate>
+        2026-08-30
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Storybook 与 Hexo 博客集成指南</h1>
+            
+            <div class="markdown-body">
+              <h1 id="📖-Storybook-与-Hexo-博客集成指南"><a href="#📖-Storybook-与-Hexo-博客集成指南" class="headerlink" title="📖 Storybook 与 Hexo 博客集成指南"></a>📖 Storybook 与 Hexo 博客集成指南</h1><h2 id="🎯-方案概述"><a href="#🎯-方案概述" class="headerlink" title="🎯 方案概述"></a>🎯 方案概述</h2><p>将 <code>react-radial-menu-master</code> 组件库的 <strong>Storybook 交互式文档</strong>无缝集成到 Hexo 博客系统中，通过 iframe 嵌入方式展示。</p>
+<h2 id="✅-已完成的配置"><a href="#✅-已完成的配置" class="headerlink" title="✅ 已完成的配置"></a>✅ 已完成的配置</h2><h3 id="1-Hexo-配置-config-yml"><a href="#1-Hexo-配置-config-yml" class="headerlink" title="1. Hexo 配置 (_config.yml)"></a>1. Hexo 配置 (_config.yml)</h3><p>已在 <a href="file:///e:/nodeSpace/blog/_config.yml#L30-L31"><code>_config.yml</code></a> 中添加：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">skip_render:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">storybook/**/*</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>作用</strong>: 告诉 Hexo 跳过 <code>source/storybook/</code> 目录下所有文件的 Nunjucks 模板解析，直接复制原文件。</p>
+<h3 id="2-博客文章"><a href="#2-博客文章" class="headerlink" title="2. 博客文章"></a>2. 博客文章</h3><p>已有完整的文档页面: <a href="file:///e:/nodeSpace/blog/source/_posts/react-rainbow-menu.md">react-rainbow-menu.md</a></p>
+<ul>
+<li>包含 iframe 嵌入代码</li>
+<li>完整的 API 文档</li>
+<li>使用示例和 FAQ</li>
+</ul>
+<hr>
+<h2 id="🚀-使用方法"><a href="#🚀-使用方法" class="headerlink" title="🚀 使用方法"></a>🚀 使用方法</h2><h3 id="方法一：一键部署脚本（推荐）"><a href="#方法一：一键部署脚本（推荐）" class="headerlink" title="方法一：一键部署脚本（推荐）"></a>方法一：一键部署脚本（推荐）</h3><p>双击运行 <a href="file:///e:/nodeSpace/blog/deploy-storybook.bat"><code>deploy-storybook.bat</code></a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 在 blog 目录下双击</span><br>deploy-storybook.bat<br></code></pre></td></tr></table></figure>
+
+<p>脚本会自动完成：</p>
+<ol>
+<li>✅ 进入 <code>react-radial-menu-master</code> 目录</li>
+<li>✅ 安装依赖（如需要）</li>
+<li>✅ 构建 Storybook</li>
+<li>✅ 复制到 <code>blog/source/storybook/</code></li>
+<li>✅ 清理旧版本</li>
+</ol>
+<h3 id="方法二：手动操作"><a href="#方法二：手动操作" class="headerlink" title="方法二：手动操作"></a>方法二：手动操作</h3><h4 id="Step-1-构建-Storybook"><a href="#Step-1-构建-Storybook" class="headerlink" title="Step 1: 构建 Storybook"></a>Step 1: 构建 Storybook</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> react-radial-menu-master<br>npm install          <span class="hljs-comment"># 首次运行需要安装依赖</span><br>npm run build-storybook<br></code></pre></td></tr></table></figure>
+
+<p>构建产物默认输出到 <code>storybook-static/</code> 目录。</p>
+<h4 id="Step-2-复制到博客目录"><a href="#Step-2-复制到博客目录" class="headerlink" title="Step 2: 复制到博客目录"></a>Step 2: 复制到博客目录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 删除旧版本（如果存在）</span><br><span class="hljs-built_in">rmdir</span> /s /q ..\blog\<span class="hljs-built_in">source</span>\storybook<br><br><span class="hljs-comment"># 复制新版本</span><br>xcopy /E /I /Y storybook-static ..\blog\<span class="hljs-built_in">source</span>\storybook<br></code></pre></td></tr></table></figure>
+
+<h4 id="Step-3-启动博客预览"><a href="#Step-3-启动博客预览" class="headerlink" title="Step 3: 启动博客预览"></a>Step 3: 启动博客预览</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ../blog<br>hexo server<br></code></pre></td></tr></table></figure>
+
+<p>访问：</p>
+<ul>
+<li>📚 文章页: <a target="_blank" rel="noopener" href="http://localhost:4000/2026/07/09/react-rainbow-menu/">http://localhost:4000/2026/07/09/react-rainbow-menu/</a></li>
+<li>🎮 Storybook: <a target="_blank" rel="noopener" href="http://localhost:4000/storybook/">http://localhost:4000/storybook/</a></li>
+</ul>
+<hr>
+<h2 id="🔧-技术细节"><a href="#🔧-技术细节" class="headerlink" title="🔧 技术细节"></a>🔧 技术细节</h2><h3 id="为什么需要-skip-render？"><a href="#为什么需要-skip-render？" class="headerlink" title="为什么需要 skip_render？"></a>为什么需要 skip_render？</h3><p><strong>问题原因</strong>:</p>
+<ul>
+<li>Hexo 使用 <a target="_blank" rel="noopener" href="https://mozilla.github.io/nunjucks/">Nunjucks</a> 模板引擎</li>
+<li>Nunjucks 使用 <code>&#123;&#123; variable &#125;&#125;</code> 语法</li>
+<li>JavaScript 文件中的对象字面量 <code>&#123; key: value &#125;</code> 会触发解析错误</li>
+</ul>
+<p><strong>解决方案</strong>:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">skip_render:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">storybook/**/*</span>   <span class="hljs-comment"># 跳过 storybook 目录下所有文件</span><br></code></pre></td></tr></table></figure>
+
+<p>这样 Hexo 会：</p>
+<ul>
+<li>✅ 直接复制 JS/CSS/HTML 文件到 <code>public/</code> 目录</li>
+<li>❌ 不进行模板语法解析</li>
+<li>✅ 保持原始代码完整性</li>
+</ul>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs nix">e:\nodeSpace\<br>├── blog<span class="hljs-symbol">/</span>                          <span class="hljs-comment"># Hexo 博客</span><br>│   ├── source<span class="hljs-symbol">/</span><br>│   │   ├── _posts<span class="hljs-symbol">/</span><br>│   │   │   └── react-rainbow-menu.md  <span class="hljs-comment"># 📄 组件库文档</span><br>│   │   └── storybook<span class="hljs-symbol">/</span>             <span class="hljs-comment"># 🎮 Storybook 构建产物（自动生成）</span><br>│   │       ├── index.html<br>│   │       ├── iframe.html<br>│   │       ├── stories-BasicControls-stories.xxx.iframe.bundle.js<br>│   │       └── ...<br>│   ├── _config.yml                <span class="hljs-comment"># ⚙️ 已配置 skip_render</span><br>│   └── deploy-storybook.bat       <span class="hljs-comment"># 🚀 一键部署脚本</span><br>│<br>└── react-radial-menu-master<span class="hljs-symbol">/</span>      <span class="hljs-comment"># React 组件库源码</span><br>    ├── src<span class="hljs-symbol">/</span><br>    ├── .storybook<span class="hljs-symbol">/</span><br>    ├── storybook-static<span class="hljs-symbol">/</span>          <span class="hljs-comment"># 构建输出（临时）</span><br>    └── package.json<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📝-更新流程"><a href="#📝-更新流程" class="headerlink" title="📝 更新流程"></a>📝 更新流程</h2><p>当组件库代码更新后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1. 运行部署脚本</span><br><span class="hljs-built_in">cd</span> blog<br>deploy-storybook.bat<br><br><span class="hljs-comment"># 2. 本地测试</span><br>hexo server<br><span class="hljs-comment"># 访问 http://localhost:4000/storyboard/ 验证</span><br><br><span class="hljs-comment"># 3. 部署上线</span><br>hexo generate<br>hexo deploy<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎨-自定义配置"><a href="#🎨-自定义配置" class="headerlink" title="🎨 自定义配置"></a>🎨 自定义配置</h2><h3 id="修改-Storybook-输出路径"><a href="#修改-Storybook-输出路径" class="headerlink" title="修改 Storybook 输出路径"></a>修改 Storybook 输出路径</h3><p>如果需要修改 Storybook 的构建输出路径，编辑 <a href="file:///e:/nodeSpace/react-radial-menu-master/.storybook/main.ts"><code>react-radial-menu-master/.storybook/main.ts</code></a>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">stories</span>: [<span class="hljs-string">&#x27;../src/**/*.stories.@(ts|tsx|js|jsx)&#x27;</span>],<br>  <span class="hljs-attr">addons</span>: [<br>    <span class="hljs-string">&#x27;@storybook/addon-essentials&#x27;</span>,<br>    <span class="hljs-string">&#x27;@storybook/addon-interactions&#x27;</span>,<br>  ],<br>  <span class="hljs-attr">framework</span>: <span class="hljs-string">&#x27;@storybook/react&#x27;</span>,<br>  <span class="hljs-attr">core</span>: &#123;<br>    <span class="hljs-attr">builder</span>: <span class="hljs-string">&#x27;@storybook/builder-webpack5&#x27;</span>,<br>  &#125;,<br>  <span class="hljs-comment">// 修改输出目录（可选）</span><br>  <span class="hljs-attr">outputDir</span>: <span class="hljs-string">&#x27;storybook-static&#x27;</span>,  <span class="hljs-comment">// 默认值</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="调整-iframe-大小"><a href="#调整-iframe-大小" class="headerlink" title="调整 iframe 大小"></a>调整 iframe 大小</h3><p>编辑 <a href="file:///e:/nodeSpace/blog/source/_posts/react-rainbow-menu.md">react-rainbow-menu.md</a> 中的 iframe：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">iframe</span></span><br><span class="hljs-tag">  <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/storybook/&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100%&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;800px&quot;</span>           &lt;!<span class="hljs-attr">--</span> <span class="hljs-attr">调整高度</span> <span class="hljs-attr">--</span>&gt;</span><br>  frameborder=&quot;0&quot;<br>  style=&quot;border: 2px solid #667eea; border-radius: 12px; ...&quot;<br>  loading=&quot;lazy&quot;&gt;<br><span class="hljs-tag">&lt;/<span class="hljs-name">iframe</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚠️-注意事项"><a href="#⚠️-注意事项" class="headerlink" title="⚠️ 注意事项"></a>⚠️ 注意事项</h2><h3 id="1-不要手动编辑-source-storybook"><a href="#1-不要手动编辑-source-storybook" class="headerlink" title="1. 不要手动编辑 source/storybook/"></a>1. 不要手动编辑 source/storybook/</h3><p>该目录是<strong>自动生成</strong>的，每次运行部署脚本都会被覆盖。如需修改：</p>
+<ul>
+<li>修改组件库源码 (<code>react-radial-menu-master/src/</code>)</li>
+<li>修改 Storybook 配置 (<code>.storybook/</code>)</li>
+<li>重新运行部署脚本</li>
+</ul>
+<h3 id="2-Git-忽略规则"><a href="#2-Git-忽略规则" class="headerlink" title="2. Git 忽略规则"></a>2. Git 忽略规则</h3><p>建议在 <code>.gitignore</code> 中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gitignore"># blog/.gitignore<br>source/storybook/<br>public/storybook/<br>db.json<br>.deploy_git/<br></code></pre></td></tr></table></figure>
+
+<p>避免将构建产物提交到仓库。</p>
+<h3 id="3-性能优化"><a href="#3-性能优化" class="headerlink" title="3. 性能优化"></a>3. 性能优化</h3><ul>
+<li>✅ <code>loading=&quot;lazy&quot;</code> - iframe 懒加载</li>
+<li>✅ 按需加载 - 只在特定文章页嵌入</li>
+<li>✅ CDN 加速 - 可考虑将 Storybook 部署到单独的 CDN</li>
+</ul>
+<hr>
+<h2 id="🐛-故障排除"><a href="#🐛-故障排除" class="headerlink" title="🐛 故障排除"></a>🐛 故障排除</h2><h3 id="问题-1-404-Not-Found"><a href="#问题-1-404-Not-Found" class="headerlink" title="问题 1: 404 Not Found"></a>问题 1: 404 Not Found</h3><p><strong>症状</strong>: 访问 <code>/storybook/</code> 返回 404</p>
+<p><strong>解决方案</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 确认文件存在</span><br><span class="hljs-built_in">dir</span> <span class="hljs-built_in">source</span>\storybook\index.html<br><br><span class="hljs-comment"># 清理缓存并重新生成</span><br>hexo clean<br>hexo server<br></code></pre></td></tr></table></figure>
+
+<h3 id="问题-2-Nunjucks-错误仍然存在"><a href="#问题-2-Nunjucks-错误仍然存在" class="headerlink" title="问题 2: Nunjucks 错误仍然存在"></a>问题 2: Nunjucks 错误仍然存在</h3><p><strong>症状</strong>: 启动时报 <code>expected variable end</code> 错误</p>
+<p><strong>解决方案</strong>:</p>
+<ol>
+<li>检查 <code>_config.yml</code> 中 <code>skip_render</code> 配置</li>
+<li>确保缩进正确（使用空格，不用 Tab）</li>
+<li>重启服务器：<code>hexo server --debug</code></li>
+</ol>
+<h3 id="问题-3-样式丢失"><a href="#问题-3-样式丢失" class="headerlink" title="问题 3: 样式丢失"></a>问题 3: 样式丢失</h3><p><strong>症状</strong>: Storybook 页面样式混乱</p>
+<p><strong>原因</strong>: 相对路径问题</p>
+<p><strong>解决方案</strong>:<br>确认 Storybook 的 <code>base</code> 配置：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// .storybook/main.ts</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-comment">// ...</span><br>  <span class="hljs-attr">base</span>: <span class="hljs-string">&#x27;/storybook/&#x27;</span>,  <span class="hljs-comment">// 重要！</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🌟-高级方案（可选）"><a href="#🌟-高级方案（可选）" class="headerlink" title="🌟 高级方案（可选）"></a>🌟 高级方案（可选）</h2><h3 id="方案-A-子域名部署"><a href="#方案-A-子域名部署" class="headerlink" title="方案 A: 子域名部署"></a>方案 A: 子域名部署</h3><p>将 Storybook 部署到独立子域名：</p>
+<ol>
+<li>构建 Storybook：<code>npm run build-storybook</code></li>
+<li>部署到 <code>storybook.yourdomain.com</code></li>
+<li>修改博客中的 iframe src：<code>src=&quot;https://storybook.yourdomain.com&quot;</code></li>
+</ol>
+<p><strong>优点</strong>:</p>
+<ul>
+<li>完全隔离，不影响博客性能</li>
+<li>可独立缓存策略</li>
+<li>支持 HTTPS 单独配置</li>
+</ul>
+<h3 id="方案-B-GitHub-Pages-分支"><a href="#方案-B-GitHub-Pages-分支" class="headerlink" title="方案 B: GitHub Pages 分支"></a>方案 B: GitHub Pages 分支</h3><p>使用 GitHub Pages 的独立分支：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 创建 gh-pages 分支</span><br>git subtree push --prefix storybook-static origin gh-pages<br></code></pre></td></tr></table></figure>
+
+<p>启用 GitHub Pages 后访问：<code>https://username.github.io/repo-name/</code></p>
+<hr>
+<h2 id="📊-成果展示"><a href="#📊-成果展示" class="headerlink" title="📊 成果展示"></a>📊 成果展示</h2><p>集成完成后，你的博客将拥有：</p>
+<p>✅ <strong>完整的交互式文档</strong> - 用户可直接在博客中试用组件<br>✅ <strong>实时代码演示</strong> - 无需切换到其他平台<br>✅ <strong>统一的用户体验</strong> - 文档、示例、API 一站式访问<br>✅ <strong>自动化部署</strong> - 一键更新，无需手动复制</p>
+<hr>
+<h2 id="💡-最佳实践"><a href="#💡-最佳实践" class="headerlink" title="💡 最佳实践"></a>💡 最佳实践</h2><ol>
+<li><strong>版本同步</strong>: 组件库发版时同时更新博客文档</li>
+<li><strong>性能监控</strong>: 定期检查 iframe 加载速度</li>
+<li><strong>用户反馈</strong>: 在文章中添加反馈入口</li>
+<li><strong>SEO 优化</strong>: 为 iframe 提供 alt 文本和描述</li>
+</ol>
+<hr>
+<p><em>最后更新: 2026-09-30 | 维护者: xiaorunbao</em></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BB%84%E4%BB%B6%E5%BA%93/">组件库</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/20260930/React-Rainbow-Menu%E7%BB%84%E4%BB%B6%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React Rainbow Menu 组件完全指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/20220317/Windows%E4%B8%8Agit%E6%8D%A2%E8%A1%8C%E7%AC%A6LF-CRLF%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">Windows上git换行符LF-CRLF问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

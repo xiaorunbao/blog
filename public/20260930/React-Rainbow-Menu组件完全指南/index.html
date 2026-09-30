@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="xiaorunbao">
+  <meta name="keywords" content="">
+  
+  <title>React Rainbow Menu 组件完全指南 - rainbow</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>rainbow</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/storybook/">
+                <i class="iconfont icon-category-fill"></i>
+                react-rainbow-menu
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="React Rainbow Menu 组件完全指南">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2026-09-30 00:00" pubdate>
+        2026-09-30
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      59
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React Rainbow Menu 组件完全指南</h1>
+            
+            <div class="markdown-body">
+              <h1 id="🌈-React-Rainbow-Menu-高性能径向菜单组件"><a href="#🌈-React-Rainbow-Menu-高性能径向菜单组件" class="headerlink" title="🌈 React Rainbow Menu - 高性能径向菜单组件"></a>🌈 React Rainbow Menu - 高性能径向菜单组件</h1><p><strong>@xiaorunbao/react-rainbow-menu</strong> 是一个功能强大的 React 彩虹菜单组件，支持多层嵌套子菜单、流畅动画和主题定制。</p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@xiaorunbao/react-rainbow-menu"><img src="https://img.shields.io/npm/v/@xiaorunbao/react-rainbow-menu.svg" srcset="/img/loading.gif" lazyload alt="npm version"></a><br><a target="_blank" rel="noopener" href="https://github.com/xiaorunbao/react-rainbow-menu/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@xiaorunbao/react-rainbow-menu.svg" srcset="/img/loading.gif" lazyload alt="license"></a><br><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@xiaorunbao/react-rainbow-menu"><img src="https://img.shields.io/npm/dt/@xiaorunbao/react-rainbow-menu.svg" srcset="/img/loading.gif" lazyload alt="downloads"></a></p>
+<h2 id="✨-核心特性"><a href="#✨-核心特性" class="headerlink" title="✨ 核心特性"></a>✨ 核心特性</h2><h3 id="为什么选择-Rainbow-Menu"><a href="#为什么选择-Rainbow-Menu" class="headerlink" title="为什么选择 Rainbow Menu?"></a>为什么选择 Rainbow Menu?</h3><ul>
+<li>🚀 <strong>开箱即用</strong> - 零配置启动，3 行代码实现径向菜单</li>
+<li>🎨 <strong>高度可定制</strong> - CSS 变量驱动主题系统，支持深色模式</li>
+<li>💫 <strong>流畅动画</strong> - 内置 fade/scale/rotate 动画，支持组合使用</li>
+<li>🔥 <strong>性能优化</strong> - GPU 加速动画，60fps 流畅体验</li>
+<li>📱 <strong>移动端友好</strong> - 触摸优化，完美适配各种屏幕尺寸</li>
+<li>🧩 <strong>TypeScript</strong> - 完整类型定义，智能提示友好</li>
+<li>🌳 <strong>无限层级</strong> - 支持多层嵌套子菜单，带返回导航</li>
+<li>⚡ <strong>轻量级</strong> - Gzip 后 &lt; 10KB，零依赖</li>
+</ul>
+<h2 id="🎮-在线演示-amp-效果展示"><a href="#🎮-在线演示-amp-效果展示" class="headerlink" title="🎮 在线演示 &amp; 效果展示"></a>🎮 在线演示 &amp; 效果展示</h2><p>👉 <a target="_blank" rel="noopener" href="https://xiaorunbao.github.io/storybook/">交互式 Demo</a></p>
+<h3 id="🎬-动画效果预览"><a href="#🎬-动画效果预览" class="headerlink" title="🎬 动画效果预览"></a>🎬 动画效果预览</h3><p><img src="demo.gif" srcset="/img/loading.gif" lazyload alt="Rainbow Menu Demo"></p>
+<p><em>上图展示了 Rainbow Menu 的流畅动画效果，包括菜单展开、子菜单嵌套和多种交互状态</em></p>
+<h2 id="📦-快速安装"><a href="#📦-快速安装" class="headerlink" title="📦 快速安装"></a>📦 快速安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># npm</span><br>npm install @xiaorunbao/react-rainbow-menu<br><br><span class="hljs-comment"># yarn</span><br>yarn add @xiaorunbao/react-rainbow-menu<br><br><span class="hljs-comment"># pnpm</span><br>pnpm add @xiaorunbao/react-rainbow-menu<br></code></pre></td></tr></table></figure>
+
+<h2 id="🚀-5-分钟上手"><a href="#🚀-5-分钟上手" class="headerlink" title="🚀 5 分钟上手"></a>🚀 5 分钟上手</h2><h3 id="基础用法：圆点按钮触发器"><a href="#基础用法：圆点按钮触发器" class="headerlink" title="基础用法：圆点按钮触发器"></a>基础用法：圆点按钮触发器</h3><p>最常用的场景 - 点击圆形按钮弹出菜单，菜单位置与按钮中心完全对齐。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useState, useRef &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Menu</span>, <span class="hljs-title class_">MenuItem</span>, <span class="hljs-title class_">SubMenu</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@xiaorunbao/react-rainbow-menu&#x27;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [show, setShow] = <span class="hljs-title function_">useState</span>(<span class="hljs-literal">false</span>);<br>  <span class="hljs-keyword">const</span> [position, setPosition] = <span class="hljs-title function_">useState</span>(&#123; <span class="hljs-attr">x</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">200</span> &#125;);<br>  <span class="hljs-keyword">const</span> circleRef = useRef&lt;<span class="hljs-title class_">HTMLDivElement</span>&gt;(<span class="hljs-literal">null</span>);<br>  <span class="hljs-keyword">const</span> containerRef = useRef&lt;<span class="hljs-title class_">HTMLDivElement</span>&gt;(<span class="hljs-literal">null</span>);<br><br>  <span class="hljs-comment">// 点击圆点按钮时计算精确中心位置</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">handleCircleClick</span> = (<span class="hljs-params"><span class="hljs-attr">e</span>: <span class="hljs-title class_">React</span>.<span class="hljs-title class_">MouseEvent</span></span>) =&gt; &#123;<br>    e.<span class="hljs-title function_">stopPropagation</span>();<br>    <br>    <span class="hljs-keyword">if</span> (!circleRef.<span class="hljs-property">current</span> || !containerRef.<span class="hljs-property">current</span>) <span class="hljs-keyword">return</span>;<br>    <br>    <span class="hljs-comment">// 获取按钮的边界矩形</span><br>    <span class="hljs-keyword">const</span> buttonRect = circleRef.<span class="hljs-property">current</span>.<span class="hljs-title function_">getBoundingClientRect</span>();<br>    <span class="hljs-comment">// 获取容器的边界矩形（用于坐标转换）</span><br>    <span class="hljs-keyword">const</span> containerRect = containerRef.<span class="hljs-property">current</span>.<span class="hljs-title function_">getBoundingClientRect</span>();<br>    <br>    <span class="hljs-comment">// 计算按钮相对于容器的中心坐标</span><br>    <span class="hljs-keyword">const</span> centerX = buttonRect.<span class="hljs-property">left</span> - containerRect.<span class="hljs-property">left</span> + buttonRect.<span class="hljs-property">width</span> / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">const</span> centerY = buttonRect.<span class="hljs-property">top</span> - containerRect.<span class="hljs-property">top</span> + buttonRect.<span class="hljs-property">height</span> / <span class="hljs-number">2</span>;<br>    <br>    <span class="hljs-title function_">setPosition</span>(&#123; <span class="hljs-attr">x</span>: centerX, <span class="hljs-attr">y</span>: centerY &#125;);<br>    <span class="hljs-title function_">setShow</span>(!show);<br>  &#125;;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> </span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">ref</span>=<span class="hljs-string">&#123;containerRef&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span> <span class="hljs-attr">width:</span> &#x27;<span class="hljs-attr">100vw</span>&#x27;, <span class="hljs-attr">height:</span> &#x27;<span class="hljs-attr">100vh</span>&#x27;, <span class="hljs-attr">position:</span> &#x27;<span class="hljs-attr">relative</span>&#x27; &#125;&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">      <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> setShow(false)&#125; // 点击其他区域关闭菜单</span><br><span class="language-xml">    &gt;</span><br><span class="language-xml">      &#123;/* 64px 圆形触发按钮 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">ref</span>=<span class="hljs-string">&#123;circleRef&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;handleCircleClick&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">width:</span> &#x27;<span class="hljs-attr">64px</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">height:</span> &#x27;<span class="hljs-attr">64px</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">borderRadius:</span> &#x27;<span class="hljs-attr">50</span>%&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">background:</span> &#x27;<span class="hljs-attr">linear-gradient</span>(<span class="hljs-attr">135deg</span>, #<span class="hljs-attr">667eea</span> <span class="hljs-attr">0</span>%, #<span class="hljs-attr">764ba2</span> <span class="hljs-attr">100</span>%)&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">position:</span> &#x27;<span class="hljs-attr">absolute</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">left:</span> &#x27;<span class="hljs-attr">200px</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">top:</span> &#x27;<span class="hljs-attr">200px</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">cursor:</span> &#x27;<span class="hljs-attr">pointer</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">display:</span> &#x27;<span class="hljs-attr">flex</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">alignItems:</span> &#x27;<span class="hljs-attr">center</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">justifyContent:</span> &#x27;<span class="hljs-attr">center</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">color:</span> &#x27;<span class="hljs-attr">white</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">fontSize:</span> &#x27;<span class="hljs-attr">14px</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">fontWeight:</span> &#x27;<span class="hljs-attr">bold</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">boxShadow:</span> &#x27;<span class="hljs-attr">0</span> <span class="hljs-attr">8px</span> <span class="hljs-attr">24px</span> <span class="hljs-attr">rgba</span>(<span class="hljs-attr">102</span>, <span class="hljs-attr">126</span>, <span class="hljs-attr">234</span>, <span class="hljs-attr">0.4</span>)&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">transition:</span> &#x27;<span class="hljs-attr">all</span> <span class="hljs-attr">0.2s</span> <span class="hljs-attr">ease</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">userSelect:</span> &#x27;<span class="hljs-attr">none</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">        &#125;&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">      &gt;</span></span><br><span class="language-xml">        菜单</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">      &#123;/* 径向菜单 - 中心与按钮对齐 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Menu</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">centerX</span>=<span class="hljs-string">&#123;position.x&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">centerY</span>=<span class="hljs-string">&#123;position.y&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">innerRadius</span>=<span class="hljs-string">&#123;50&#125;</span>   // <span class="hljs-attr">内圈半径</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">outerRadius</span>=<span class="hljs-string">&#123;110&#125;</span>  // <span class="hljs-attr">外圈半径</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">maxLayers</span>=<span class="hljs-string">&#123;2&#125;</span>      // <span class="hljs-attr">最大嵌套层数</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">animation</span>=<span class="hljs-string">&quot;scale&quot;</span>  // <span class="hljs-attr">缩放动画</span></span></span><br><span class="hljs-tag"><span class="language-xml">      &gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;home&quot;</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;首页&#x27;)&#125;&gt;</span><br><span class="language-xml">          🏠 首页</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">    </span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;profile&quot;</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;个人中心&#x27;)&#125;&gt;</span><br><span class="language-xml">          👤 个人中心</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">    </span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">SubMenu</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;tools&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">itemView</span>=<span class="hljs-string">&quot;🛠️ 工具箱&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">displayView</span>=<span class="hljs-string">&quot;← 返回&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">displayPosition</span>=<span class="hljs-string">&quot;center&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        &gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;calc&quot;</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;计算器&#x27;)&#125;&gt;</span><br><span class="language-xml">            🧮 计算器</span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">      </span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;notes&quot;</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;笔记&#x27;)&#125;&gt;</span><br><span class="language-xml">            📝 笔记</span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">SubMenu</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">data</span>=<span class="hljs-string">&quot;settings&quot;</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;设置&#x27;)&#125;&gt;</span><br><span class="language-xml">          ⚙️ 设置</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="右键上下文菜单"><a href="#右键上下文菜单" class="headerlink" title="右键上下文菜单"></a>右键上下文菜单</h3><p>适用于桌面应用的右键菜单场景。</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs tsx">&lt;div<br>  onContextMenu=&#123;<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>    e.<span class="hljs-title function_">preventDefault</span>(); <span class="hljs-comment">// 阻止浏览器默认右键菜单</span><br>    <span class="hljs-title function_">setPosition</span>(&#123; <span class="hljs-attr">x</span>: e.<span class="hljs-property">clientX</span>, <span class="hljs-attr">y</span>: e.<span class="hljs-property">clientY</span> &#125;);<br>    <span class="hljs-title function_">setShow</span>(<span class="hljs-literal">true</span>);<br>  &#125;&#125;<br>  onClick=&#123;<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">setShow</span>(<span class="hljs-literal">false</span>)&#125;<br>  style=&#123;&#123; <span class="hljs-attr">width</span>: <span class="hljs-string">&#x27;100vw&#x27;</span>, <span class="hljs-attr">height</span>: <span class="hljs-string">&#x27;100vh&#x27;</span> &#125;&#125;<br>&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Menu</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">centerX</span>=<span class="hljs-string">&#123;position.x&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">centerY</span>=<span class="hljs-string">&#123;position.y&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">innerRadius</span>=<span class="hljs-string">&#123;75&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">outerRadius</span>=<span class="hljs-string">&#123;150&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">animation</span>=<span class="hljs-string">&#123;[</span>&#x27;<span class="hljs-attr">fade</span>&#x27;, &#x27;<span class="hljs-attr">scale</span>&#x27;]&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">animationTimeout</span>=<span class="hljs-string">&#123;150&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">    <span class="hljs-attr">drawBackground</span> // <span class="hljs-attr">显示半透明背景圆</span></span></span><br><span class="hljs-tag"><span class="language-xml">  &gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span>&gt;</span>复制<span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span>&gt;</span>粘贴<span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">SubMenu</span> <span class="hljs-attr">itemView</span>=<span class="hljs-string">&quot;更多选项&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span>&gt;</span>设置<span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span>&gt;</span>帮助<span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">SubMenu</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="🎨-主题定制"><a href="#🎨-主题定制" class="headerlink" title="🎨 主题定制"></a>🎨 主题定制</h2><h3 id="使用-CSS-变量自定义样式"><a href="#使用-CSS-变量自定义样式" class="headerlink" title="使用 CSS 变量自定义样式"></a>使用 CSS 变量自定义样式</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-comment">/* 全局默认主题 */</span><br><span class="hljs-selector-pseudo">:root</span> &#123;<br>  <span class="hljs-attr">--rrm-color</span>: <span class="hljs-number">#667eea</span>;              <span class="hljs-comment">/* 主色调 */</span><br>  <span class="hljs-attr">--rrm-background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0.95</span>); <span class="hljs-comment">/* 背景色 */</span><br>  <span class="hljs-attr">--rrm-item-border-radius</span>: <span class="hljs-number">8px</span>;     <span class="hljs-comment">/* 菜单项圆角 */</span><br>  <span class="hljs-attr">--rrm-item-font-size</span>: <span class="hljs-number">14px</span>;        <span class="hljs-comment">/* 字体大小 */</span><br>  <span class="hljs-attr">--rrm-item-padding</span>: <span class="hljs-number">8px</span>;           <span class="hljs-comment">/* 内边距 */</span><br>&#125;<br><br><span class="hljs-comment">/* 深色模式 */</span><br><span class="hljs-selector-attr">[data-theme=<span class="hljs-string">&quot;dark&quot;</span>]</span> &#123;<br>  <span class="hljs-attr">--rrm-color</span>: <span class="hljs-number">#818cf8</span>;<br>  <span class="hljs-attr">--rrm-background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">15</span>, <span class="hljs-number">23</span>, <span class="hljs-number">42</span>, <span class="hljs-number">0.95</span>);<br>&#125;<br><br><span class="hljs-comment">/* 自定义渐变背景 */</span><br><span class="hljs-selector-class">.rainbow-menu-custom</span> &#123;<br>  <span class="hljs-attr">--rrm-background</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">135deg</span>, <span class="hljs-number">#f093fb</span> <span class="hljs-number">0%</span>, <span class="hljs-number">#f5576c</span> <span class="hljs-number">100%</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="单独控制菜单项样式"><a href="#单独控制菜单项样式" class="headerlink" title="单独控制菜单项样式"></a>单独控制菜单项样式</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs tsx">&lt;<span class="hljs-title class_">MenuItem</span><br>  data=<span class="hljs-string">&quot;special&quot;</span><br>  style=&#123;&#123; <span class="hljs-attr">fill</span>: <span class="hljs-string">&#x27;#ef4444&#x27;</span> &#125;&#125; <span class="hljs-comment">// SVG fill 属性</span><br>  onItemClick=&#123;handleClick&#125;<br>&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span> <span class="hljs-attr">fontWeight:</span> &#x27;<span class="hljs-attr">bold</span>&#x27;, <span class="hljs-attr">color:</span> &#x27;<span class="hljs-attr">white</span>&#x27; &#125;&#125;&gt;</span></span><br><span class="language-xml">    ⭐ 特殊项</span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br>&lt;/<span class="hljs-title class_">MenuItem</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="📚-API-参考"><a href="#📚-API-参考" class="headerlink" title="📚 API 参考"></a>📚 API 参考</h2><h3 id="Menu-组件"><a href="#Menu-组件" class="headerlink" title="Menu 组件"></a>Menu 组件</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>show</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>控制菜单显示/隐藏</td>
+</tr>
+<tr>
+<td><code>centerX</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>菜单中心 X 坐标</td>
+</tr>
+<tr>
+<td><code>centerY</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>菜单中心 Y 坐标</td>
+</tr>
+<tr>
+<td><code>innerRadius</code></td>
+<td><code>number</code></td>
+<td><code>60</code></td>
+<td>内圈半径 (px)</td>
+</tr>
+<tr>
+<td><code>outerRadius</code></td>
+<td><code>number</code></td>
+<td><code>120</code></td>
+<td>外圈半径 (px)</td>
+</tr>
+<tr>
+<td><code>animation</code></td>
+<td><code>string | string[]</code></td>
+<td><code>&quot;fade&quot;</code></td>
+<td>动画类型</td>
+</tr>
+<tr>
+<td><code>animationTimeout</code></td>
+<td><code>number</code></td>
+<td><code>150</code></td>
+<td>动画时长 (ms)</td>
+</tr>
+<tr>
+<td><code>maxLayers</code></td>
+<td><code>number</code></td>
+<td><code>3</code></td>
+<td>最大嵌套层数</td>
+</tr>
+<tr>
+<td><code>drawBackground</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>显示背景圆</td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td><code>&#39;light&#39; | &#39;dark&#39;</code></td>
+<td><code>&#39;light&#39;</code></td>
+<td>主题模式</td>
+</tr>
+</tbody></table>
+<h4 id="动画类型"><a href="#动画类型" class="headerlink" title="动画类型"></a>动画类型</h4><ul>
+<li><code>fade</code> - 淡入淡出</li>
+<li><code>scale</code> - 缩放效果</li>
+<li><code>rotate</code> - 旋转效果</li>
+</ul>
+<p><strong>组合使用</strong>: <code>animation=&#123;[&#39;fade&#39;, &#39;scale&#39;]&#125;</code> 同时应用多种动画</p>
+<h3 id="MenuItem-组件"><a href="#MenuItem-组件" class="headerlink" title="MenuItem 组件"></a>MenuItem 组件</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>data</code></td>
+<td><code>any</code></td>
+<td>附加数据，传递给回调函数</td>
+</tr>
+<tr>
+<td><code>onItemClick</code></td>
+<td><code>(event, index, data) =&gt; void</code></td>
+<td>点击事件处理</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>React.CSSProperties</code></td>
+<td>自定义样式</td>
+</tr>
+</tbody></table>
+<p><strong>回调参数说明</strong>:</p>
+<ul>
+<li><code>event</code>: React 鼠标事件对象</li>
+<li><code>index</code>: 菜单项索引 (从 0 开始)</li>
+<li><code>data</code>: 通过 <code>data</code> 属性传入的数据</li>
+</ul>
+<h3 id="SubMenu-组件"><a href="#SubMenu-组件" class="headerlink" title="SubMenu 组件"></a>SubMenu 组件</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>itemView</code></td>
+<td><code>string | ReactNode</code></td>
+<td>-</td>
+<td>在父菜单中显示的内容</td>
+</tr>
+<tr>
+<td><code>displayView</code></td>
+<td><code>string | ReactNode</code></td>
+<td><code>&quot;← Back&quot;</code></td>
+<td>返回按钮文字/组件</td>
+</tr>
+<tr>
+<td><code>displayPosition</code></td>
+<td><code>DisplayPosition</code></td>
+<td><code>&quot;center&quot;</code></td>
+<td>返回按钮位置</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>any</code></td>
+<td>-</td>
+<td>附加数据</td>
+</tr>
+<tr>
+<td><code>onItemClick</code></td>
+<td><code>function</code></td>
+<td>-</td>
+<td>子菜单项点击回调</td>
+</tr>
+<tr>
+<td><code>onDisplayClick</code></td>
+<td><code>function</code></td>
+<td>-</td>
+<td>返回按钮点击回调</td>
+</tr>
+</tbody></table>
+<h4 id="DisplayPosition-可选值"><a href="#DisplayPosition-可选值" class="headerlink" title="DisplayPosition 可选值"></a>DisplayPosition 可选值</h4><ul>
+<li><code>&quot;center&quot;</code> - 中心圆形返回按钮</li>
+<li><code>&quot;top&quot;</code> / <code>&quot;bottom&quot;</code> / <code>&quot;left&quot;</code> / <code>&quot;right&quot;</code> - 对应方向的返回按钮</li>
+</ul>
+<h2 id="🎯-应用场景与实战案例"><a href="#🎯-应用场景与实战案例" class="headerlink" title="🎯 应用场景与实战案例"></a>🎯 应用场景与实战案例</h2><h3 id="📌-最适合的场景"><a href="#📌-最适合的场景" class="headerlink" title="📌 最适合的场景"></a>📌 最适合的场景</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>应用示例</th>
+<th>推荐配置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>🖥️ 桌面应用</strong></td>
+<td>右键上下文菜单、工具面板</td>
+<td><code>animation: &#39;fade&#39;</code>, <code>drawBackground: true</code></td>
+</tr>
+<tr>
+<td><strong>📱 移动端 APP</strong></td>
+<td>浮动操作按钮 (FAB)、手势菜单</td>
+<td><code>animation: &#39;scale&#39;</code>, 触摸优化</td>
+</tr>
+<tr>
+<td><strong>🎮 游戏界面</strong></td>
+<td>技能轮盘、道具选择器</td>
+<td><code>animation: [&#39;rotate&#39;, &#39;scale&#39;]</code>, 大半径</td>
+</tr>
+<tr>
+<td><strong>🎨 设计工具</strong></td>
+<td>颜色选择器、画笔选项</td>
+<td>自定义主题, 图标菜单项</td>
+</tr>
+<tr>
+<td><strong>📊 数据可视化</strong></td>
+<td>图表交互控件</td>
+<td>轻量动画, 快速响应</td>
+</tr>
+<tr>
+<td><strong>🛒 电商网站</strong></td>
+<td>快速筛选、排序选项</td>
+<td>简洁风格, 2层嵌套</td>
+</tr>
+</tbody></table>
+<h3 id="💡-实战案例：FAB-浮动按钮菜单"><a href="#💡-实战案例：FAB-浮动按钮菜单" class="headerlink" title="💡 实战案例：FAB 浮动按钮菜单"></a>💡 实战案例：FAB 浮动按钮菜单</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Menu</span>, <span class="hljs-title class_">MenuItem</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@xiaorunbao/react-rainbow-menu&#x27;</span>;<br><br><span class="hljs-comment">// 移动端常见的浮动操作按钮（FAB）实现</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">FloatingActionButton</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [show, setShow] = <span class="hljs-title function_">useState</span>(<span class="hljs-literal">false</span>);<br>  <span class="hljs-keyword">const</span> [position, setPosition] = <span class="hljs-title function_">useState</span>(&#123; <span class="hljs-attr">x</span>: <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerWidth</span> - <span class="hljs-number">80</span>, <span class="hljs-attr">y</span>: <span class="hljs-variable language_">window</span>.<span class="hljs-property">innerHeight</span> - <span class="hljs-number">120</span> &#125;);<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span> <span class="hljs-attr">position:</span> &#x27;<span class="hljs-attr">relative</span>&#x27;, <span class="hljs-attr">width:</span> &#x27;<span class="hljs-attr">100vw</span>&#x27;, <span class="hljs-attr">height:</span> &#x27;<span class="hljs-attr">100vh</span>&#x27; &#125;&#125;&gt;</span></span><br><span class="language-xml">      &#123;/* FAB 按钮 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;</span><br><span class="language-xml">          // 动态计算按钮位置（右下角）</span><br><span class="language-xml">          setPosition(&#123;</span><br><span class="language-xml">            x: window.innerWidth - 80,</span><br><span class="language-xml">            y: window.innerHeight - 120</span><br><span class="language-xml">          &#125;);</span><br><span class="language-xml">          setShow(!show);</span><br><span class="language-xml">        &#125;&#125;</span><br><span class="language-xml">        style=&#123;&#123;</span><br><span class="language-xml">          position: &#x27;fixed&#x27;,</span><br><span class="language-xml">          right: &#x27;20px&#x27;,</span><br><span class="language-xml">          bottom: &#x27;20px&#x27;,</span><br><span class="language-xml">          width: &#x27;56px&#x27;,</span><br><span class="language-xml">          height: &#x27;56px&#x27;,</span><br><span class="language-xml">          borderRadius: &#x27;50%&#x27;,</span><br><span class="language-xml">          background: &#x27;linear-gradient(135deg, #667eea 0%, #764ba2 100%)&#x27;,</span><br><span class="language-xml">          border: &#x27;none&#x27;,</span><br><span class="language-xml">          color: &#x27;white&#x27;,</span><br><span class="language-xml">          fontSize: &#x27;24px&#x27;,</span><br><span class="language-xml">          cursor: &#x27;pointer&#x27;,</span><br><span class="language-xml">          boxShadow: &#x27;0 6px 20px rgba(102, 126, 234, 0.4)&#x27;,</span><br><span class="language-xml">          zIndex: 1000,</span><br><span class="language-xml">          transition: &#x27;transform 0.2s ease&#x27;</span><br><span class="language-xml">        &#125;&#125;</span><br><span class="language-xml">      &gt;</span><br><span class="language-xml">        &#123;show ? &#x27;✕&#x27; : &#x27;+&#x27;&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">      &#123;/* 径向菜单 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Menu</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">centerX</span>=<span class="hljs-string">&#123;position.x&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">centerY</span>=<span class="hljs-string">&#123;position.y&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">innerRadius</span>=<span class="hljs-string">&#123;40&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">outerRadius</span>=<span class="hljs-string">&#123;100&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">animation</span>=<span class="hljs-string">&quot;scale&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">maxLayers</span>=<span class="hljs-string">&#123;1&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">      &gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;新建文件&#x27;)&#125;&gt;</span><br><span class="language-xml">          📄 新建</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;上传文件&#x27;)&#125;&gt;</span><br><span class="language-xml">          ⬆️ 上传</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;搜索&#x27;)&#125;&gt;</span><br><span class="language-xml">          🔍 搜索</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> console.log(&#x27;分享&#x27;)&#125;&gt;</span><br><span class="language-xml">          📤 分享</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">      &#123;/* 点击遮罩关闭菜单 */&#125;</span><br><span class="language-xml">      &#123;show &amp;&amp; (</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span></span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">position:</span> &#x27;<span class="hljs-attr">fixed</span>&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">top:</span> <span class="hljs-attr">0</span>,</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">left:</span> <span class="hljs-attr">0</span>,</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">right:</span> <span class="hljs-attr">0</span>,</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">bottom:</span> <span class="hljs-attr">0</span>,</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">background:</span> &#x27;<span class="hljs-attr">rgba</span>(<span class="hljs-attr">0</span>, <span class="hljs-attr">0</span>, <span class="hljs-attr">0</span>, <span class="hljs-attr">0.3</span>)&#x27;,</span></span><br><span class="hljs-tag"><span class="language-xml">            <span class="hljs-attr">zIndex:</span> <span class="hljs-attr">999</span></span></span><br><span class="hljs-tag"><span class="language-xml">          &#125;&#125;</span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> setShow(false)&#125;</span><br><span class="language-xml">        /&gt;</span><br><span class="language-xml">      )&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><h4 id="1-精确居中对齐"><a href="#1-精确居中对齐" class="headerlink" title="1. 精确居中对齐"></a>1. 精确居中对齐</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 推荐：使用 getBoundingClientRect() 计算精确中心</span><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">handleClick</span> = (<span class="hljs-params"><span class="hljs-attr">e</span>: <span class="hljs-title class_">React</span>.<span class="hljs-title class_">MouseEvent</span>, <span class="hljs-attr">triggerRef</span>: <span class="hljs-title class_">RefObject</span>&lt;<span class="hljs-title class_">HTMLDivElement</span>&gt;</span>) =&gt; &#123;<br>  <span class="hljs-keyword">if</span> (!triggerRef.<span class="hljs-property">current</span>) <span class="hljs-keyword">return</span>;<br>  <br>  <span class="hljs-keyword">const</span> rect = triggerRef.<span class="hljs-property">current</span>.<span class="hljs-title function_">getBoundingClientRect</span>();<br>  <span class="hljs-keyword">const</span> parentRect = containerRef.<span class="hljs-property">current</span>?.<span class="hljs-title function_">getBoundingClientRect</span>();<br>  <br>  <span class="hljs-keyword">if</span> (parentRect) &#123;<br>    <span class="hljs-keyword">const</span> centerX = rect.<span class="hljs-property">left</span> - parentRect.<span class="hljs-property">left</span> + rect.<span class="hljs-property">width</span> / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">const</span> centerY = rect.<span class="hljs-property">top</span> - parentRect.<span class="hljs-property">top</span> + rect.<span class="hljs-property">height</span> / <span class="hljs-number">2</span>;<br>    <span class="hljs-title function_">setPosition</span>(&#123; <span class="hljs-attr">x</span>: centerX, <span class="hljs-attr">y</span>: centerY &#125;);<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-性能优化建议"><a href="#2-性能优化建议" class="headerlink" title="2. 性能优化建议"></a>2. 性能优化建议</h4><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-comment">// 使用 useCallback 避免重复创建函数</span><br><span class="hljs-keyword">const</span> handleItemClick = <span class="hljs-title function_">useCallback</span>(<span class="hljs-function">(<span class="hljs-params">event, index, data</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Clicked:&#x27;</span>, data);<br>  <span class="hljs-title function_">setShow</span>(<span class="hljs-literal">false</span>);<br>&#125;, []);<br><br><span class="hljs-comment">// 合理设置 maxLayers 避免过深嵌套</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Menu</span> <span class="hljs-attr">maxLayers</span>=<span class="hljs-string">&#123;2&#125;</span>&gt;</span> &#123;/* 推荐不超过 3 层 */&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-无障碍访问-A11y"><a href="#3-无障碍访问-A11y" class="headerlink" title="3. 无障碍访问 (A11y)"></a>3. 无障碍访问 (A11y)</h4><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs tsx">&lt;<span class="hljs-title class_">MenuItem</span><br>  role=<span class="hljs-string">&quot;menuitem&quot;</span><br>  aria-label=<span class="hljs-string">&quot;保存文件&quot;</span><br>  tabIndex=&#123;<span class="hljs-number">0</span>&#125;<br>  onKeyDown=&#123;<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (e.<span class="hljs-property">key</span> === <span class="hljs-string">&#x27;Enter&#x27;</span> || e.<span class="hljs-property">key</span> === <span class="hljs-string">&#x27; &#x27;</span>) &#123;<br>      <span class="hljs-title function_">handleSave</span>();<br>    &#125;<br>  &#125;&#125;<br>  onItemClick=&#123;handleSave&#125;<br>&gt;<br>  💾 保存<br>&lt;/<span class="hljs-title class_">MenuItem</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="🔄-从-v1-x-升级到-v2-x"><a href="#🔄-从-v1-x-升级到-v2-x" class="headerlink" title="🔄 从 v1.x 升级到 v2.x"></a>🔄 从 v1.x 升级到 v2.x</h2><p>如果你正在使用旧版本 <code>@spaceymonk/react-radial-menu</code>，迁移非常简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 卸载旧包</span><br>npm uninstall @spaceymonk/react-radial-menu<br><br><span class="hljs-comment"># 安装新包</span><br>npm install @xiaorunbao/react-rainbow-menu<br></code></pre></td></tr></table></figure>
+
+<p><strong>代码改动</strong>:</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">- import &#123; Menu, MenuItem, SubMenu &#125; from &#x27;@spaceymonk/react-radial-menu&#x27;;</span><br><span class="hljs-addition">+ import &#123; Menu, MenuItem, SubMenu &#125; from &#x27;@xiaorunbao/react-rainbow-menu&#x27;;</span><br></code></pre></td></tr></table></figure>
+
+<p>API 完全兼容，无需修改任何业务逻辑！✨</p>
+<h2 id="🐛-常见问题"><a href="#🐛-常见问题" class="headerlink" title="🐛 常见问题"></a>🐛 常见问题</h2><h3 id="Q-菜单位置偏移不正确？"><a href="#Q-菜单位置偏移不正确？" class="headerlink" title="Q: 菜单位置偏移不正确？"></a>Q: 菜单位置偏移不正确？</h3><p><strong>A</strong>: 确保使用 <code>getBoundingClientRect()</code> 计算相对坐标，而不是直接使用 <code>clientX/clientY</code>。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 错误：直接使用鼠标坐标（如果容器不是全屏）</span><br><span class="hljs-title function_">setPosition</span>(&#123; <span class="hljs-attr">x</span>: e.<span class="hljs-property">clientX</span>, <span class="hljs-attr">y</span>: e.<span class="hljs-property">clientY</span> &#125;);<br><br><span class="hljs-comment">// 正确：减去容器的偏移量</span><br><span class="hljs-keyword">const</span> offset = containerRef.<span class="hljs-property">current</span>?.<span class="hljs-title function_">getBoundingClientRect</span>();<br><span class="hljs-keyword">if</span> (offset) &#123;<br>  <span class="hljs-title function_">setPosition</span>(&#123;<br>    <span class="hljs-attr">x</span>: e.<span class="hljs-property">clientX</span> - offset.<span class="hljs-property">left</span>,<br>    <span class="hljs-attr">y</span>: e.<span class="hljs-property">clientY</span> - offset.<span class="hljs-property">top</span><br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Q-如何在菜单外部点击时关闭？"><a href="#Q-如何在菜单外部点击时关闭？" class="headerlink" title="Q: 如何在菜单外部点击时关闭？"></a>Q: 如何在菜单外部点击时关闭？</h3><p><strong>A</strong>: 库不会自动关闭菜单，你需要自己管理状态：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs tsx">&lt;div onClick=&#123;<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">setShow</span>(<span class="hljs-literal">false</span>)&#125;&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Menu</span> <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> setShow(false)&#125;&gt;</span><br><span class="language-xml">      点击关闭</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Q-子菜单不显示？"><a href="#Q-子菜单不显示？" class="headerlink" title="Q: 子菜单不显示？"></a>Q: 子菜单不显示？</h3><p><strong>A</strong>: 确保每个层级的子菜单至少有 2 个子元素：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs tsx">&lt;<span class="hljs-title class_">SubMenu</span> itemView=<span class="hljs-string">&quot;Parent&quot;</span>&gt;<br>  &#123;<span class="hljs-comment">/* 至少需要 2 个子元素 */</span>&#125;<br>  &lt;<span class="hljs-title class_">MenuItem</span>&gt;<span class="hljs-title class_">Child</span> <span class="hljs-number">1</span>&lt;/<span class="hljs-title class_">MenuItem</span>&gt;<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span>&gt;</span>Child 2<span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br>&lt;/<span class="hljs-title class_">SubMenu</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Q-动画卡顿怎么办？"><a href="#Q-动画卡顿怎么办？" class="headerlink" title="Q: 动画卡顿怎么办？"></a>Q: 动画卡顿怎么办？</h3><p><strong>A</strong>: 尝试以下优化：</p>
+<ol>
+<li>减小 <code>innerRadius</code> 和 <code>outerRadius</code></li>
+<li>降低 <code>animationTimeout</code> 到 100-120ms</li>
+<li>使用单一动画而非组合动画</li>
+<li>确保 <code>maxLayers</code> 不超过 3</li>
+</ol>
+<h2 id="📊-性能基准与对比"><a href="#📊-性能基准与对比" class="headerlink" title="📊 性能基准与对比"></a>📊 性能基准与对比</h2><h3 id="性能数据"><a href="#性能数据" class="headerlink" title="性能数据"></a>性能数据</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>数值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Gzip 大小</strong></td>
+<td>~8KB</td>
+<td>轻量级，加载迅速</td>
+</tr>
+<tr>
+<td><strong>首次渲染</strong></td>
+<td>&lt; 16ms</td>
+<td>即时响应</td>
+</tr>
+<tr>
+<td><strong>动画帧率</strong></td>
+<td>60 FPS</td>
+<td>流畅体验</td>
+</tr>
+<tr>
+<td><strong>内存占用</strong></td>
+<td>~2MB</td>
+<td>低内存消耗</td>
+</tr>
+<tr>
+<td><strong>最大层级数</strong></td>
+<td>无限制 (推荐 ≤ 3)</td>
+<td>灵活嵌套</td>
+</tr>
+</tbody></table>
+<p><em>测试环境: Chrome 120, MacBook Pro M1, 5 个菜单项</em></p>
+<h3 id="与其他方案对比"><a href="#与其他方案对比" class="headerlink" title="与其他方案对比"></a>与其他方案对比</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Rainbow Menu</th>
+<th>原生 Context Menu</th>
+<th>其他 Radial Menu 库</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>自定义程度</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>动画效果</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>TypeScript 支持</strong></td>
+<td>✅ 完整</td>
+<td>❌</td>
+<td>部分支持</td>
+</tr>
+<tr>
+<td><strong>移动端适配</strong></td>
+<td>✅ 优秀</td>
+<td>❌</td>
+<td>一般</td>
+</tr>
+<tr>
+<td><strong>嵌套子菜单</strong></td>
+<td>✅ 无限层级</td>
+<td>❌</td>
+<td>有限支持</td>
+</tr>
+<tr>
+<td><strong>主题定制</strong></td>
+<td>CSS 变量</td>
+<td>系统依赖</td>
+<td>有限</td>
+</tr>
+<tr>
+<td><strong>包大小</strong></td>
+<td>~8KB</td>
+<td>0 (原生)</td>
+<td>15-50KB</td>
+</tr>
+</tbody></table>
+<h2 id="🔧-高级技巧"><a href="#🔧-高级技巧" class="headerlink" title="🔧 高级技巧"></a>🔧 高级技巧</h2><h3 id="1-动态菜单项渲染"><a href="#1-动态菜单项渲染" class="headerlink" title="1. 动态菜单项渲染"></a>1. 动态菜单项渲染</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-comment">// 根据用户权限动态生成菜单项</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">DynamicMenu</span>(<span class="hljs-params">&#123; userRole &#125;: &#123; userRole: <span class="hljs-built_in">string</span> &#125;</span>) &#123;<br>  <span class="hljs-comment">// 定义不同角色可用的菜单项</span><br>  <span class="hljs-keyword">const</span> menuConfig = &#123;<br>    <span class="hljs-attr">admin</span>: [<br>      &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;users&#x27;</span>, <span class="hljs-attr">icon</span>: <span class="hljs-string">&#x27;👥&#x27;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;用户管理&#x27;</span> &#125;,<br>      &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;settings&#x27;</span>, <span class="hljs-attr">icon</span>: <span class="hljs-string">&#x27;⚙️&#x27;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;系统设置&#x27;</span> &#125;,<br>      &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;logs&#x27;</span>, <span class="hljs-attr">icon</span>: <span class="hljs-string">&#x27;📋&#x27;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;操作日志&#x27;</span> &#125;<br>    ],<br>    <span class="hljs-attr">user</span>: [<br>      &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;profile&#x27;</span>, <span class="hljs-attr">icon</span>: <span class="hljs-string">&#x27;👤&#x27;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;个人中心&#x27;</span> &#125;,<br>      &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&#x27;logout&#x27;</span>, <span class="hljs-attr">icon</span>: <span class="hljs-string">&#x27;🚪&#x27;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;退出登录&#x27;</span> &#125;<br>    ]<br>  &#125;;<br><br>  <span class="hljs-keyword">const</span> items = menuConfig[userRole] || menuConfig.<span class="hljs-property">user</span>;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Menu</span> <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span> <span class="hljs-attr">centerX</span>=<span class="hljs-string">&#123;x&#125;</span> <span class="hljs-attr">centerY</span>=<span class="hljs-string">&#123;y&#125;</span>&gt;</span></span><br><span class="language-xml">      &#123;items.map((item) =&gt; (</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;item.id&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">data</span>=<span class="hljs-string">&#123;item.id&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;(event,</span> <span class="hljs-attr">index</span>, <span class="hljs-attr">data</span>) =&gt;</span> handleMenuClick(data)&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          &#123;item.icon&#125; &#123;item.label&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">      ))&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-键盘导航支持"><a href="#2-键盘导航支持" class="headerlink" title="2. 键盘导航支持"></a>2. 键盘导航支持</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-comment">// 添加键盘快捷键支持（提升无障碍性）</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">AccessibleMenu</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [focusedIndex, setFocusedIndex] = <span class="hljs-title function_">useState</span>(-<span class="hljs-number">1</span>);<br>  <br>  <span class="hljs-comment">// 键盘事件处理</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">handleKeyDown</span> = (<span class="hljs-params"><span class="hljs-attr">e</span>: <span class="hljs-title class_">React</span>.<span class="hljs-title class_">KeyboardEvent</span></span>) =&gt; &#123;<br>    <span class="hljs-keyword">const</span> itemCount = <span class="hljs-number">4</span>; <span class="hljs-comment">// 菜单项总数</span><br>    <br>    <span class="hljs-keyword">switch</span>(e.<span class="hljs-property">key</span>) &#123;<br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowDown&#x27;</span>:<br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowRight&#x27;</span>:<br>        <span class="hljs-comment">// 向下/右移动焦点</span><br>        e.<span class="hljs-title function_">preventDefault</span>();<br>        <span class="hljs-title function_">setFocusedIndex</span>(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> (prev + <span class="hljs-number">1</span>) % itemCount);<br>        <span class="hljs-keyword">break</span>;<br>        <br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowUp&#x27;</span>:<br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowLeft&#x27;</span>:<br>        <span class="hljs-comment">// 向上/左移动焦点</span><br>        e.<span class="hljs-title function_">preventDefault</span>();<br>        <span class="hljs-title function_">setFocusedIndex</span>(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> prev &lt;= <span class="hljs-number">0</span> ? itemCount - <span class="hljs-number">1</span> : prev - <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">break</span>;<br>        <br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;Enter&#x27;</span>:<br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27; &#x27;</span>:<br>        <span class="hljs-comment">// 选中当前聚焦的菜单项</span><br>        e.<span class="hljs-title function_">preventDefault</span>();<br>        <span class="hljs-keyword">if</span> (focusedIndex &gt;= <span class="hljs-number">0</span>) &#123;<br>          <span class="hljs-title function_">handleSelect</span>(focusedIndex);<br>        &#125;<br>        <span class="hljs-keyword">break</span>;<br>        <br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;Escape&#x27;</span>:<br>        <span class="hljs-comment">// 关闭菜单</span><br>        <span class="hljs-title function_">setShow</span>(<span class="hljs-literal">false</span>);<br>        <span class="hljs-title function_">setFocusedIndex</span>(-<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>  &#125;;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">onKeyDown</span>=<span class="hljs-string">&#123;handleKeyDown&#125;</span> <span class="hljs-attr">tabIndex</span>=<span class="hljs-string">&#123;0&#125;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Menu</span> <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span>&gt;</span></span><br><span class="language-xml">        &#123;/* 菜单项根据 focusedIndex 高亮显示 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-与状态管理集成（Redux-Zustand）"><a href="#3-与状态管理集成（Redux-Zustand）" class="headerlink" title="3. 与状态管理集成（Redux/Zustand）"></a>3. 与状态管理集成（Redux/Zustand）</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-keyword">import</span> &#123; useAppDispatch, useAppSelector &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./store&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; openMenu, closeMenu, selectMenuItem &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./menuSlice&#x27;</span>;<br><br><span class="hljs-comment">// 集成 Redux 状态管理的径向菜单</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">ReduxMenu</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> dispatch = <span class="hljs-title function_">useAppDispatch</span>();<br>  <span class="hljs-keyword">const</span> &#123; show, position &#125; = <span class="hljs-title function_">useAppSelector</span>(<span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.<span class="hljs-property">menu</span>);<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;&gt;</span></span><br><span class="language-xml">      &#123;/* 触发按钮 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> dispatch(openMenu(&#123; x: 100, y: 100 &#125;))&#125;&gt;</span><br><span class="language-xml">        打开菜单</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml"></span><br><span class="language-xml">      &#123;/* 径向菜单 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Menu</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">show</span>=<span class="hljs-string">&#123;show&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">centerX</span>=<span class="hljs-string">&#123;position.x&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">centerY</span>=<span class="hljs-string">&#123;position.y&#125;</span></span></span><br><span class="hljs-tag"><span class="language-xml">      &gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;</span><br><span class="language-xml">          dispatch(selectMenuItem(&#x27;option1&#x27;));</span><br><span class="language-xml">          dispatch(closeMenu());</span><br><span class="language-xml">        &#125;&#125;&gt;</span><br><span class="language-xml">          选项 1</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">        </span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">MenuItem</span> <span class="hljs-attr">onItemClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> &#123;</span><br><span class="language-xml">          dispatch(selectMenuItem(&#x27;option2&#x27;));</span><br><span class="language-xml">          dispatch(closeMenu());</span><br><span class="language-xml">        &#125;&#125;&gt;</span><br><span class="language-xml">          选项 2</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">MenuItem</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Menu</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/&gt;</span></span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="🎯-总结与推荐"><a href="#🎯-总结与推荐" class="headerlink" title="🎯 总结与推荐"></a>🎯 总结与推荐</h2><h3 id="✅-推荐使用场景"><a href="#✅-推荐使用场景" class="headerlink" title="✅ 推荐使用场景"></a>✅ 推荐使用场景</h3><ul>
+<li>需要<strong>高度定制化</strong>的径向菜单</li>
+<li>追求<strong>流畅动画效果</strong>的现代化应用</li>
+<li>需要<strong>多层嵌套</strong>的复杂菜单结构</li>
+<li><strong>跨平台</strong>项目（Web + 移动端）</li>
+<li>对<strong>包体积敏感</strong>的性能优先项目</li>
+</ul>
+<h3 id="⚠️-注意事项"><a href="#⚠️-注意事项" class="headerlink" title="⚠️ 注意事项"></a>⚠️ 注意事项</h3><ol>
+<li><strong>坐标计算</strong>: 务必使用 <code>getBoundingClientRect()</code> 进行精确的位置计算</li>
+<li><strong>性能考量</strong>: 嵌套层级建议不超过 3 层，避免性能问题</li>
+<li><strong>移动端测试</strong>: 在真机上测试触摸事件和手势操作</li>
+<li><strong>无障碍性</strong>: 为生产环境添加键盘导航和 ARIA 属性</li>
+<li><strong>状态管理</strong>: 复杂应用建议集成全局状态管理（Redux/Zustand）</li>
+</ol>
+<h3 id="🌟-项目亮点"><a href="#🌟-项目亮点" class="headerlink" title="🌟 项目亮点"></a>🌟 项目亮点</h3><ul>
+<li>📦 <strong>零依赖</strong> - 无需安装其他第三方库</li>
+<li>🎨 <strong>CSS 变量驱动</strong> - 主题切换极其灵活</li>
+<li>⚡ <strong>GPU 加速</strong> - 使用 transform 实现硬件加速动画</li>
+<li>🧩 <strong>组件化设计</strong> - Menu/MenuItem/SubMenu 职责清晰</li>
+<li>📝 <strong>TypeScript 友好</strong> - 完整的类型定义和智能提示</li>
+<li>🔄 <strong>向后兼容</strong> - 从 v1.x 升级无需修改业务代码</li>
+</ul>
+<h2 id="🤝-贡献指南"><a href="#🤝-贡献指南" class="headerlink" title="🤝 贡献指南"></a>🤝 贡献指南</h2><p>我们欢迎所有形式的贡献！</p>
+<h3 id="开发环境搭建"><a href="#开发环境搭建" class="headerlink" title="开发环境搭建"></a>开发环境搭建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 克隆仓库</span><br>git <span class="hljs-built_in">clone</span> https://github.com/xiaorunbao/react-rainbow-menu.git<br><span class="hljs-built_in">cd</span> react-rainbow-menu<br><br><span class="hljs-comment"># 安装依赖</span><br>npm install<br><br><span class="hljs-comment"># 启动开发服务器 (Storybook)</span><br>npm run storybook<br><br><span class="hljs-comment"># 构建生产版本</span><br>npm run rollup<br></code></pre></td></tr></table></figure>
+
+<h2 id="📄-许可证"><a href="#📄-许可证" class="headerlink" title="📄 许可证"></a>📄 许可证</h2><p><a href="LICENSE">MIT License</a> © 2024 <a target="_blank" rel="noopener" href="https://github.com/xiaorunbao">xiaorunbao</a></p>
+<h2 id="🙏-致谢"><a href="#🙏-致谢" class="headerlink" title="🙏 致谢"></a>🙏 致谢</h2><p>感谢 <a target="_blank" rel="noopener" href="https://github.com/spaceymonk">spaceymonk</a> 创建了原始的 react-radial-menu 项目，本库在其基础上进行了功能增强和优化。</p>
+<h2 id="📚-延伸阅读与相关资源"><a href="#📚-延伸阅读与相关资源" class="headerlink" title="📚 延伸阅读与相关资源"></a>📚 延伸阅读与相关资源</h2><h3 id="官方资源"><a href="#官方资源" class="headerlink" title="官方资源"></a>官方资源</h3><ul>
+<li><strong>GitHub 仓库</strong>: <a target="_blank" rel="noopener" href="https://github.com/xiaorunbao/react-rainbow-menu">xiaorunbao/react-rainbow-menu</a></li>
+<li><strong>npm 包</strong>: <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@xiaorunbao/react-rainbow-menu">@xiaorunbao/react-rainbow-menu</a></li>
+<li><strong>在线文档</strong>: <a target="_blank" rel="noopener" href="https://xiaorunbao.github.io/react-rainbow-menu/">Storybook 交互式文档</a></li>
+<li><strong>问题反馈</strong>: <a target="_blank" rel="noopener" href="https://github.com/xiaorunbao/react-rainbow-menu/issues">GitHub Issues</a></li>
+</ul>
+<h3 id="相关技术文章"><a href="#相关技术文章" class="headerlink" title="相关技术文章"></a>相关技术文章</h3><ul>
+<li><strong>React 径向菜单设计模式</strong> - 了解径向/圆形 UI 的设计原理</li>
+<li><strong>CSS 动画性能优化</strong> - 深入理解 GPU 加速和 transform 动画</li>
+<li><strong>React 组件设计最佳实践</strong> - 学习如何构建可复用的 React 组件</li>
+<li><strong>TypeScript 与 React</strong> - 掌握 React 项目中的 TypeScript 最佳实践</li>
+</ul>
+<h3 id="类似项目对比"><a href="#类似项目对比" class="headerlink" title="类似项目对比"></a>类似项目对比</h3><ul>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/xxx/radial-menu">radial-menu</a></strong> - 另一个径向菜单实现</li>
+<li><strong><a target="_blank" rel="noopener" href="https://github.com/xxx/context-menu">context-menu</a></strong> - 传统上下文菜单库</li>
+<li><strong><a target="_blank" rel="noopener" href="https://floating-ui.com/">floating-ui</a></strong> - 通用的浮动定位工具库</li>
+</ul>
+<hr>
+<h2 id="💬-交流与讨论"><a href="#💬-交流与讨论" class="headerlink" title="💬 交流与讨论"></a>💬 交流与讨论</h2><p>如果你在使用过程中遇到问题，或者想要分享你的使用场景：</p>
+<ol>
+<li>在 <strong>GitHub Issues</strong> 提交问题或建议</li>
+<li>参与 <strong>社区讨论</strong>，分享你的使用经验</li>
+<li>欢迎 <strong>提交 PR</strong>，共同完善这个项目</li>
+</ol>
+<hr>
+<p><em>本文基于 <a target="_blank" rel="noopener" href="https://github.com/xiaorunbao/react-rainbow-menu">react-rainbow-menu</a> 项目整理</em></p>
+<p><em>最后更新: 2026-09-30 | 作者: xiaorunbao</em></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BB%84%E4%BB%B6%E5%BA%93/">组件库</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a>
+                    
+                      <a class="hover-with-bg" href="/tags/UI%E7%BB%84%E4%BB%B6/">UI组件</a>
+                    
+                      <a class="hover-with-bg" href="/tags/TypeScript/">TypeScript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8A%A8%E7%94%BB/">动画</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">开源项目</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/20260830/storybook%E4%B8%8Ehexo%E5%8D%9A%E5%AE%A2%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97/">
+                        <span class="hidden-mobile">Storybook 与 Hexo 博客集成指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
