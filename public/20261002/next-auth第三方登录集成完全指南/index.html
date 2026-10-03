@@ -1,0 +1,817 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="xiaorunbao">
+  <meta name="keywords" content="">
+  
+  <title>Next-Auth v5 第三方登录集成完全指南（Google、Facebook） - rainbow</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>rainbow</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/storybook/">
+                <i class="iconfont icon-category-fill"></i>
+                react-rainbow-menu
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Next-Auth v5 第三方登录集成完全指南（Google、Facebook）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2026-10-02 00:00" pubdate>
+        2026-10-02
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      72
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Next-Auth v5 第三方登录集成完全指南（Google、Facebook）</h1>
+            
+            <div class="markdown-body">
+              <h1 id="🔐-Next-Auth-v5-第三方登录集成完全指南"><a href="#🔐-Next-Auth-v5-第三方登录集成完全指南" class="headerlink" title="🔐 Next-Auth v5 第三方登录集成完全指南"></a>🔐 Next-Auth v5 第三方登录集成完全指南</h1><p>在现代 Web 应用中，<strong>第三方登录（OAuth）</strong>已成为提升用户体验的关键功能。本文将详细介绍如何使用 <strong>next-auth v5 (Auth.js)</strong> 在 Next.js 项目中集成 Google 和 Facebook 登录，并提供完整的实战代码和最佳实践。</p>
+<p><a target="_blank" rel="noopener" href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-14.2-black?logo=next.js" srcset="/img/loading.gif" lazyload alt="Next.js"></a><br><a target="_blank" rel="noopener" href="https://next-auth.js.org/"><img src="https://img.shields.io/badge/next--auth-5.0_beta-black" srcset="/img/loading.gif" lazyload alt="next-auth"></a><br><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript" srcset="/img/loading.gif" lazyload alt="TypeScript"></a></p>
+<h2 id="📋-目录"><a href="#📋-目录" class="headerlink" title="📋 目录"></a>📋 目录</h2><ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-next-auth">为什么选择 Next-Auth?</a></li>
+<li><a href="#%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E5%AE%89%E8%A3%85">项目初始化与安装</a></li>
+<li><a href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90">核心配置文件解析</a></li>
+<li><a href="#google-oauth-%E9%9B%86%E6%88%90%E8%AF%A6%E8%A7%A3">Google OAuth 集成详解</a></li>
+<li><a href="#facebook-oauth-%E9%9B%86%E6%88%90%E8%AF%A6%E8%A7%A3">Facebook OAuth 集成详解</a></li>
+<li><a href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B%E6%9E%B6%E6%9E%84%E5%9B%BE">认证流程架构图</a></li>
+<li><a href="#session-%E7%AE%A1%E7%90%86%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">Session 管理最佳实践</a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E4%BF%9D%E6%8A%A4%E6%96%B9%E6%A1%88">路由保护方案</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">常见问题与解决方案</a></li>
+<li><a href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">生产环境部署注意事项</a></li>
+</ul>
+<hr>
+<h2 id="🎯-为什么选择-Next-Auth"><a href="#🎯-为什么选择-Next-Auth" class="headerlink" title="🎯 为什么选择 Next-Auth?"></a>🎯 为什么选择 Next-Auth?</h2><p>在众多认证方案中，<strong>Next-Auth</strong> 具有以下优势：</p>
+<h3 id="✅-核心优势"><a href="#✅-核心优势" class="headerlink" title="✅ 核心优势"></a>✅ 核心优势</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>开箱即用</strong></td>
+<td>内置 Google、Facebook、GitHub 等 50+ OAuth 提供者</td>
+</tr>
+<tr>
+<td><strong>类型安全</strong></td>
+<td>完整的 TypeScript 支持</td>
+</tr>
+<tr>
+<td><strong>Session 管理</strong></td>
+<td>自动处理 JWT/Database Session</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>内置 CSRF 保护、HTTPS 强制等安全机制</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>支持自定义登录页面、回调函数等</td>
+</tr>
+<tr>
+<td><strong>Active Development</strong></td>
+<td>v5 beta 版本持续更新，性能优化</td>
+</tr>
+</tbody></table>
+<h3 id="📊-技术栈要求"><a href="#📊-技术栈要求" class="headerlink" title="📊 技术栈要求"></a>📊 技术栈要求</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;dependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;next&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^14.0.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;react&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^18.0.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;next-auth&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^5.0.0-beta&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>: 本文基于 <strong><a href="mailto:&#110;&#x65;&#120;&#x74;&#x2d;&#x61;&#117;&#116;&#104;&#64;&#53;&#x2e;&#x30;&#x2e;&#48;&#x2d;&#x62;&#101;&#116;&#x61;&#46;&#50;&#49;">&#110;&#x65;&#120;&#x74;&#x2d;&#x61;&#117;&#116;&#104;&#64;&#53;&#x2e;&#x30;&#x2e;&#48;&#x2d;&#x62;&#101;&#116;&#x61;&#46;&#50;&#49;</a></strong> 编写，API 可能与 v4 有差异。</p>
+</blockquote>
+<hr>
+<h2 id="🚀-项目初始化与安装"><a href="#🚀-项目初始化与安装" class="headerlink" title="🚀 项目初始化与安装"></a>🚀 项目初始化与安装</h2><h3 id="第一步：安装依赖"><a href="#第一步：安装依赖" class="headerlink" title="第一步：安装依赖"></a>第一步：安装依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用 npm</span><br>npm install next-auth@beta<br><br><span class="hljs-comment"># 使用 pnpm (推荐)</span><br>pnpm add next-auth@beta<br><br><span class="hljs-comment"># 使用 yarn</span><br>yarn add next-auth@beta<br></code></pre></td></tr></table></figure>
+
+<h3 id="第二步：配置环境变量"><a href="#第二步：配置环境变量" class="headerlink" title="第二步：配置环境变量"></a>第二步：配置环境变量</h3><p>创建 <code>.env.local</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># ===========================================</span><br><span class="hljs-comment"># NextAuth.js 核心配置</span><br><span class="hljs-comment"># ===========================================</span><br><br><span class="hljs-comment"># 必需: 用于加密 JWT 和会话 cookie</span><br><span class="hljs-comment"># 生成方法: openssl rand -base64 32</span><br>AUTH_SECRET=your-super-secret-key-here-change-in-production<br><br><span class="hljs-comment"># 必需: 应用的完整 URL (NextAuth 回调地址)</span><br>NEXTAUTH_URL=http://localhost:3000<br><br><span class="hljs-comment"># ------------------------------------------</span><br><span class="hljs-comment"># Google OAuth 配置 (可选)</span><br><span class="hljs-comment"># ------------------------------------------</span><br>GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com<br>GOOGLE_CLIENT_SECRET=GOCSPX-your-google-client-secret<br><br><span class="hljs-comment"># ------------------------------------------</span><br><span class="hljs-comment"># Facebook OAuth 配置 (可选)</span><br><span class="hljs-comment"># ------------------------------------------</span><br>FACEBOOK_CLIENT_ID=your-facebook-app-id<br>FACEBOOK_CLIENT_SECRET=your-facebook-app-secret<br></code></pre></td></tr></table></figure>
+
+<h3 id="⚠️-安全提醒"><a href="#⚠️-安全提醒" class="headerlink" title="⚠️ 安全提醒"></a>⚠️ 安全提醒</h3><ul>
+<li>❌ <strong>切勿将 <code>.env.local</code> 提交到 Git 仓库</strong></li>
+<li>✅ 生产环境必须更改默认的 <code>AUTH_SECRET</code></li>
+<li>✅ 使用强随机密钥生成器创建 <code>AUTH_SECRET</code></li>
+<li>✅ OAuth 凭据必须与提供商控制台配置一致</li>
+</ul>
+<hr>
+<h2 id="📁-核心配置文件解析"><a href="#📁-核心配置文件解析" class="headerlink" title="📁 核心配置文件解析"></a>📁 核心配置文件解析</h2><h3 id="1️⃣-主配置文件-auth-ts"><a href="#1️⃣-主配置文件-auth-ts" class="headerlink" title="1️⃣ 主配置文件 auth.ts"></a>1️⃣ 主配置文件 <code>auth.ts</code></h3><p>这是整个认证系统的<strong>核心文件</strong>，位于项目根目录：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">NextAuth</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;next-auth&quot;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">GoogleProvider</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;next-auth/providers/google&quot;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">FacebookProvider</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;next-auth/providers/facebook&quot;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">CredentialsProvider</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;next-auth/providers/credentials&quot;</span><br><br><span class="hljs-comment">// 导出 NextAuth 的核心功能</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> &#123;<br>  handlers,    <span class="hljs-comment">// API 路由处理器 (用于 route.ts)</span><br>  auth,        <span class="hljs-comment">// 服务端 auth() 函数 (Server Components)</span><br>  signIn,      <span class="hljs-comment">// 客户端 signIn 函数</span><br>  signOut      <span class="hljs-comment">// 客户端 signOut 函数</span><br>&#125; = <span class="hljs-title class_">NextAuth</span>(&#123;<br>  <span class="hljs-comment">// 加密密钥 - 从环境变量读取</span><br>  <span class="hljs-attr">secret</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">AUTH_SECRET</span> || <span class="hljs-string">&#x27;fallback-secret&#x27;</span>,<br>  <br>  <span class="hljs-comment">// 配置支持的登录方式</span><br>  <span class="hljs-attr">providers</span>: [<br>    <span class="hljs-comment">// 1. Google OAuth 登录</span><br>    <span class="hljs-title class_">GoogleProvider</span>(&#123;<br>      <span class="hljs-attr">clientId</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">GOOGLE_CLIENT_ID</span>!,<br>      <span class="hljs-attr">clientSecret</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">GOOGLE_CLIENT_SECRET</span>!,<br>    &#125;),<br>  <br>    <span class="hljs-comment">// 2. Facebook OAuth 登录</span><br>    <span class="hljs-title class_">FacebookProvider</span>(&#123;<br>      <span class="hljs-attr">clientId</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">FACEBOOK_CLIENT_ID</span>!,<br>      <span class="hljs-attr">clientSecret</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">FACEBOOK_CLIENT_SECRET</span>!,<br>    &#125;),<br>  <br>    <span class="hljs-comment">// 3. 邮箱密码登录 (演示用，生产环境需对接数据库)</span><br>    <span class="hljs-title class_">CredentialsProvider</span>(&#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;credentials&quot;</span>,<br>      <span class="hljs-attr">credentials</span>: &#123;<br>        <span class="hljs-attr">email</span>: &#123; <span class="hljs-attr">label</span>: <span class="hljs-string">&quot;Email&quot;</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;email&quot;</span> &#125;,<br>        <span class="hljs-attr">password</span>: &#123; <span class="hljs-attr">label</span>: <span class="hljs-string">&quot;Password&quot;</span>, <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;password&quot;</span> &#125;<br>      &#125;,<br>      <span class="hljs-keyword">async</span> <span class="hljs-title function_">authorize</span>(<span class="hljs-params">credentials</span>) &#123;<br>        <span class="hljs-comment">// ⚠️ 开发环境硬编码凭证 (仅用于测试!)</span><br>        <span class="hljs-keyword">if</span> (credentials?.<span class="hljs-property">email</span> === <span class="hljs-string">&quot;admin@nocaped.com&quot;</span> &amp;&amp;<br>            credentials?.<span class="hljs-property">password</span> === <span class="hljs-string">&quot;password123&quot;</span>) &#123;<br>          <span class="hljs-keyword">return</span> &#123;<br>            <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>            <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Admin User&quot;</span>,<br>            <span class="hljs-attr">email</span>: <span class="hljs-string">&quot;admin@example.com&quot;</span>,<br>            <span class="hljs-attr">image</span>: <span class="hljs-string">&quot;/avatar.png&quot;</span><br>          &#125;<br>        &#125;<br>      <br>        <span class="hljs-comment">// 认证失败返回 null</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span><br>      &#125;<br>    &#125;)<br>  ],<br>  <br>  <span class="hljs-comment">// 自定义页面路径</span><br>  <span class="hljs-attr">pages</span>: &#123;<br>    <span class="hljs-attr">signIn</span>: <span class="hljs-string">&#x27;/auth/signin&#x27;</span>,  <span class="hljs-comment">// 自定义登录页</span><br>  &#125;,<br>  <br>  <span class="hljs-comment">// Session 配置 (可选)</span><br>  <span class="hljs-attr">session</span>: &#123;<br>    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&#x27;jwt&#x27;</span>,  <span class="hljs-comment">// 使用 JWT 策略 (推荐)</span><br>    <span class="hljs-attr">maxAge</span>: <span class="hljs-number">30</span> * <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span>,  <span class="hljs-comment">// 30 天过期</span><br>  &#125;,<br>  <br>  <span class="hljs-comment">// 回调函数 (用于扩展 Session 和 JWT)</span><br>  <span class="hljs-attr">callbacks</span>: &#123;<br>    <span class="hljs-keyword">async</span> <span class="hljs-title function_">jwt</span>(<span class="hljs-params">&#123; token, user &#125;</span>) &#123;<br>      <span class="hljs-comment">// 首次登录时，将 user 信息合并到 token</span><br>      <span class="hljs-keyword">if</span> (user) &#123;<br>        token.<span class="hljs-property">id</span> = user.<span class="hljs-property">id</span><br>      &#125;<br>      <span class="hljs-keyword">return</span> token<br>    &#125;,<br>    <span class="hljs-keyword">async</span> <span class="hljs-title function_">session</span>(<span class="hljs-params">&#123; session, token &#125;</span>) &#123;<br>      <span class="hljs-comment">// 将 token 中的信息传递给 session</span><br>      <span class="hljs-keyword">if</span> (session.<span class="hljs-property">user</span>) &#123;<br>        session.<span class="hljs-property">user</span>.<span class="hljs-property">id</span> = token.<span class="hljs-property">id</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span><br>      &#125;<br>      <span class="hljs-keyword">return</span> session<br>    &#125;<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="🔑-关键导出说明"><a href="#🔑-关键导出说明" class="headerlink" title="🔑 关键导出说明"></a>🔑 关键导出说明</h4><table>
+<thead>
+<tr>
+<th>导出项</th>
+<th>用途</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>handlers</code></td>
+<td>API 路由处理</td>
+<td><code>route.ts</code> 中处理 <code>/api/auth/*</code> 请求</td>
+</tr>
+<tr>
+<td><code>auth()</code></td>
+<td>获取当前 session</td>
+<td>Server Components / Server Actions</td>
+</tr>
+<tr>
+<td><code>signIn()</code></td>
+<td>触发登录流程</td>
+<td>客户端组件中调用</td>
+</tr>
+<tr>
+<td><code>signOut()</code></td>
+<td>触发登出流程</td>
+<td>客户端组件中调用</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="2️⃣-API-路由-route-ts"><a href="#2️⃣-API-路由-route-ts" class="headerlink" title="2️⃣ API 路由 route.ts"></a>2️⃣ API 路由 <code>route.ts</code></h3><p>创建 <code>app/api/auth/[...nextauth]/route.ts</code>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; handlers &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@/auth&quot;</span><br><br><span class="hljs-comment">// 处理 GET 请求 (用于 OAuth 回调、获取 session 等)</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">GET</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"><span class="hljs-attr">req</span>: <span class="hljs-title class_">Request</span></span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> handlers.<span class="hljs-title function_">GET</span>(req);<br>  <span class="hljs-keyword">return</span> response;<br>&#125;;<br><br><span class="hljs-comment">// 处理 POST 请求 (用于登录、登出等操作)</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">POST</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"><span class="hljs-attr">req</span>: <span class="hljs-title class_">Request</span></span>) =&gt; &#123;<br>  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> handlers.<span class="hljs-title function_">POST</span>(req);<br>  <span class="hljs-keyword">return</span> response;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="📌-工作原理"><a href="#📌-工作原理" class="headerlink" title="📌 工作原理"></a>📌 工作原理</h4><p>这是一个 <strong>Catch-all 路由</strong> (<code>[...nextauth]</code>)，它会捕获所有匹配 <code>/api/auth/*</code> 的请求，包括：</p>
+<ul>
+<li><code>/api/auth/signin</code> - 登录页面</li>
+<li><code>/api/auth/callback/google</code> - Google OAuth 回调</li>
+<li><code>/api/auth/callback/facebook</code> - Facebook OAuth 回调</li>
+<li><code>/api/auth/signout</code> - 登出</li>
+<li><code>/api/auth/session</code> - 获取当前 session</li>
+<li><code>/api/auth/csrf</code> - CSRF token</li>
+</ul>
+<hr>
+<h3 id="3️⃣-全局-SessionProvider"><a href="#3️⃣-全局-SessionProvider" class="headerlink" title="3️⃣ 全局 SessionProvider"></a>3️⃣ 全局 SessionProvider</h3><p>在 <code>app/layout.tsx</code> (根布局) 中包裹应用：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">SessionProvider</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;next-auth/react&quot;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">RootLayout</span>(<span class="hljs-params">&#123;</span><br><span class="hljs-params">  children,</span><br><span class="hljs-params">&#125;: &#123;</span><br><span class="hljs-params">  children: React.ReactNode</span><br><span class="hljs-params">&#125;</span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">        &#123;/* </span><br><span class="language-xml">          SessionProvider 为所有子组件提供 session 上下文</span><br><span class="language-xml">          使 useSession() hook 在任何组件中可用</span><br><span class="language-xml">          自动处理 session 刷新</span><br><span class="language-xml">        */&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">SessionProvider</span>&gt;</span></span><br><span class="language-xml">          &#123;children&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">SessionProvider</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="⚡-为什么需要-SessionProvider"><a href="#⚡-为什么需要-SessionProvider" class="headerlink" title="⚡ 为什么需要 SessionProvider?"></a>⚡ 为什么需要 SessionProvider?</h4><ul>
+<li>提供 <strong>React Context</strong>，让任何组件都能访问 session 状态</li>
+<li>自动 <strong>刷新过期的 session</strong></li>
+<li>触发 <strong>UI 更新</strong> 当 session 变化时</li>
+</ul>
+<hr>
+<h2 id="🌐-Google-OAuth-集成详解"><a href="#🌐-Google-OAuth-集成详解" class="headerlink" title="🌐 Google OAuth 集成详解"></a>🌐 Google OAuth 集成详解</h2><h3 id="步骤-1：创建-Google-Cloud-项目"><a href="#步骤-1：创建-Google-Cloud-项目" class="headerlink" title="步骤 1：创建 Google Cloud 项目"></a>步骤 1：创建 Google Cloud 项目</h3><ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://console.cloud.google.com/">Google Cloud Console</a></li>
+<li>创建新项目或选择现有项目</li>
+<li>启用以下 API：<ul>
+<li><strong>Google+ API</strong> (或 People API)</li>
+<li><strong>OAuth 2.0 API</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="步骤-2：配置-OAuth-2-0-凭据"><a href="#步骤-2：配置-OAuth-2-0-凭据" class="headerlink" title="步骤 2：配置 OAuth 2.0 凭据"></a>步骤 2：配置 OAuth 2.0 凭据</h3><ol>
+<li>进入 <strong>APIs &amp; Services → Credentials</strong></li>
+<li>点击 <strong>Create Credentials → OAuth client ID</strong></li>
+<li>选择 <strong>Web application</strong> 类型</li>
+<li>配置授权域名：</li>
+</ol>
+<h4 id="Authorized-JavaScript-origins-授权-JavaScript-来源"><a href="#Authorized-JavaScript-origins-授权-JavaScript-来源" class="headerlink" title="Authorized JavaScript origins (授权 JavaScript 来源)"></a><strong>Authorized JavaScript origins</strong> (授权 JavaScript 来源)</h4><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">http:</span>//localhost:<span class="hljs-number">3000</span>          <span class="hljs-meta"># 开发环境</span><br><span class="hljs-symbol">https:</span>//yourdomain.com        <span class="hljs-meta"># 生产环境</span><br><span class="hljs-symbol">https:</span>//www.yourdomain.com    <span class="hljs-meta"># 生产环境 (www 子域名)</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Authorized-redirect-URIs-授权重定向-URI"><a href="#Authorized-redirect-URIs-授权重定向-URI" class="headerlink" title="Authorized redirect URIs (授权重定向 URI)"></a><strong>Authorized redirect URIs</strong> (授权重定向 URI)</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">3000</span><span class="hljs-regexp">/api/</span>auth<span class="hljs-regexp">/callback/g</span>oogle   <span class="hljs-comment"># 开发环境</span><br>https:<span class="hljs-regexp">//y</span>ourdomain.com<span class="hljs-regexp">/api/</span>auth<span class="hljs-regexp">/callback/g</span>oogle <span class="hljs-comment"># 生产环境</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="步骤-3：获取凭据并配置环境变量"><a href="#步骤-3：获取凭据并配置环境变量" class="headerlink" title="步骤 3：获取凭据并配置环境变量"></a>步骤 3：获取凭据并配置环境变量</h3><p>复制生成的 <strong>Client ID</strong> 和 <strong>Client Secret</strong> 到 <code>.env.local</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">GOOGLE_CLIENT_ID=123456789-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com<br>GOOGLE_CLIENT_SECRET=GOCSPX-abcdefghijklmnopqrstuvwxyz123456<br></code></pre></td></tr></table></figure>
+
+<h3 id="步骤-4：测试-Google-登录"><a href="#步骤-4：测试-Google-登录" class="headerlink" title="步骤 4：测试 Google 登录"></a>步骤 4：测试 Google 登录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 重启开发服务器</span><br>npm run dev<br><br><span class="hljs-comment"># 访问登录页面</span><br><span class="hljs-comment"># http://localhost:3000/auth/signin</span><br></code></pre></td></tr></table></figure>
+
+<p>点击 <strong>“Sign in with Google”</strong> 按钮，完成授权流程后自动跳转到 <code>/dashboard</code>。</p>
+<h4 id="🔍-Google-登录返回的用户信息"><a href="#🔍-Google-登录返回的用户信息" class="headerlink" title="🔍 Google 登录返回的用户信息"></a>🔍 Google 登录返回的用户信息</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs typescript">&#123;<br>  <span class="hljs-attr">user</span>: &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;张三&quot;</span>,                    <span class="hljs-comment">// 用户名</span><br>    <span class="hljs-attr">email</span>: <span class="hljs-string">&quot;zhangsan@gmail.com&quot;</span>,     <span class="hljs-comment">// 邮箱 (已验证)</span><br>    <span class="hljs-attr">image</span>: <span class="hljs-string">&quot;https://lh3.googleusercontent.com/...&quot;</span>  <span class="hljs-comment">// 头像 URL</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="📘-Facebook-OAuth-集成详解"><a href="#📘-Facebook-OAuth-集成详解" class="headerlink" title="📘 Facebook OAuth 集成详解"></a>📘 Facebook OAuth 集成详解</h2><h3 id="步骤-1：创建-Facebook-App"><a href="#步骤-1：创建-Facebook-App" class="headerlink" title="步骤 1：创建 Facebook App"></a>步骤 1：创建 Facebook App</h3><ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://developers.facebook.com/">Facebook Developers</a></li>
+<li>点击 <strong>My Apps → Create App</strong></li>
+<li>选择 <strong>Consumer</strong> 类型</li>
+<li>填写应用名称和联系邮箱</li>
+</ol>
+<h3 id="步骤-2：配置-Facebook-Login"><a href="#步骤-2：配置-Facebook-Login" class="headerlink" title="步骤 2：配置 Facebook Login"></a>步骤 2：配置 Facebook Login</h3><ol>
+<li>进入应用仪表板 (<strong>Dashboard</strong>)</li>
+<li>添加产品 <strong>Facebook Login</strong></li>
+<li>在 <strong>Settings → Valid OAuth Redirect URIs</strong> 中添加：</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">3000</span><span class="hljs-regexp">/api/</span>auth<span class="hljs-regexp">/callback/</span>facebook   <span class="hljs-comment"># 开发环境</span><br>https:<span class="hljs-regexp">//y</span>ourdomain.com<span class="hljs-regexp">/api/</span>auth<span class="hljs-regexp">/callback/</span>facebook <span class="hljs-comment"># 生产环境</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="步骤-3：获取-App-凭据"><a href="#步骤-3：获取-App-凭据" class="headerlink" title="步骤 3：获取 App 凭据"></a>步骤 3：获取 App 凭据</h3><p>在 <strong>Settings → Basic</strong> 中找到：</p>
+<ul>
+<li><strong>App ID</strong> → 对应 <code>FACEBOOK_CLIENT_ID</code></li>
+<li><strong>App Secret</strong> → 对应 <code>FACEBOOK_CLIENT_SECRET</code></li>
+</ul>
+<h3 id="步骤-4：配置环境变量"><a href="#步骤-4：配置环境变量" class="headerlink" title="步骤 4：配置环境变量"></a>步骤 4：配置环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">FACEBOOK_CLIENT_ID=123456789012345<br>FACEBOOK_CLIENT_SECRET=abcdef1234567890abcdef<br></code></pre></td></tr></table></figure>
+
+<h3 id="⚠️-Facebook-开发模式限制"><a href="#⚠️-Facebook-开发模式限制" class="headerlink" title="⚠️ Facebook 开发模式限制"></a>⚠️ Facebook 开发模式限制</h3><ul>
+<li>开发模式下，只有 <strong>Facebook App 的管理员/开发者/测试员</strong> 可以登录</li>
+<li>发布到生产环境前，需要在 Facebook Developers 中提交审核</li>
+</ul>
+<hr>
+<h2 id="🏗️-认证流程架构图"><a href="#🏗️-认证流程架构图" class="headerlink" title="🏗️ 认证流程架构图"></a>🏗️ 认证流程架构图</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs dart">┌─────────────────────────────────────────────────────────────┐<br>│                     认证系统架构图                            │<br>├─────────────────────────────────────────────────────────────┤<br>│                                                             │<br>│  ┌─────────┐     ┌─────────────┐     ┌──────────────────┐  │<br>│  │  前端    │     │  API 路由   │     │   <span class="hljs-title class_">Auth</span> 配置      │  │<br>│  │  组件    │────▶│ /api/auth/  │────▶│    auth.ts       │  │<br>│  └─────────┘     └─────────────┘     └──────────────────┘  │<br>│       │                                       │            │<br>│       │ <span class="hljs-title function_">useSession</span>()                          │ <span class="hljs-title class_">Providers</span>   │<br>│       │ <span class="hljs-title function_">signIn</span>()/<span class="hljs-title function_">signOut</span>()                    │             │<br>│       ▼                                       ▼            │<br>│  ┌─────────┐                         ┌─────────────────┐   │<br>│  │ <span class="hljs-title class_">Session</span> │                         │  <span class="hljs-number">1</span>. <span class="hljs-title class_">Google</span>      │   │<br>│  │ <span class="hljs-title class_">Provider</span>│◀────────────────────────│  <span class="hljs-number">2</span>. <span class="hljs-title class_">Facebook</span>    │   │<br>│  │(layout) │    JWT <span class="hljs-title class_">Session</span>          │  <span class="hljs-number">3</span>. <span class="hljs-title class_">Credentials</span> │   │<br>│  └─────────┘                         └─────────────────┘   │<br>│                                                             │<br>└─────────────────────────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
+<h3 id="🔄-完整的-OAuth-登录流程"><a href="#🔄-完整的-OAuth-登录流程" class="headerlink" title="🔄 完整的 OAuth 登录流程"></a>🔄 完整的 OAuth 登录流程</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs dart">用户访问受保护页面 (如 /dashboard)<br>         │<br>         ▼<br>   ┌─────────────┐<br>   │ 检查 <span class="hljs-title class_">Session</span> │<br>   └──────┬──────┘<br>          │<br>    ┌─────┴─────┐<br>    │           │<br>  有<span class="hljs-title class_">Session</span>   无<span class="hljs-title class_">Session</span><br>    │           │<br>    ▼           ▼<br>  显示页面   重定向到 /auth/signin<br>              │<br>              ▼<br>        ┌─────────────────────────────────┐<br>        │         选择登录方式              │<br>        ├─────────┬───────────┬───────────┤<br>        │ <span class="hljs-title class_">Google</span>  │ <span class="hljs-title class_">Facebook</span>  │ <span class="hljs-title class_">Email</span>/<span class="hljs-title class_">Pwd</span>  │<br>        └────┬────┴─────┬─────┴─────┬─────┘<br>             │          │             │<br>             ▼          ▼             ▼<br>        ┌────────┐ ┌────────┐  ┌──────────┐<br>        │ <span class="hljs-title class_">OAuth</span>  │ │ <span class="hljs-title class_">OAuth</span>  │  │  验证凭证  │<br>        │ 重定向  │ │ 重定向  │  │ (数据库)  │<br>        └───┬────┘ └───┬────┘  └─────┬────┘<br>            │           │              │<br>            ▼           ▼              ▼<br>        ┌─────────────────────────────────┐<br>        │     回调到 /api/auth/callback    │<br>        │     验证成功 → 创建 <span class="hljs-title class_">Session</span>      │<br>        └──────────────┬──────────────────┘<br>                       │<br>                       ▼<br>              重定向到 /dashboard (或 callbackUrl)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💾-Session-管理最佳实践"><a href="#💾-Session-管理最佳实践" class="headerlink" title="💾 Session 管理最佳实践"></a>💾 Session 管理最佳实践</h2><h3 id="1️⃣-客户端使用-Session-useSession-Hook"><a href="#1️⃣-客户端使用-Session-useSession-Hook" class="headerlink" title="1️⃣ 客户端使用 Session (useSession Hook)"></a>1️⃣ 客户端使用 Session (useSession Hook)</h3><p>适用于<strong>客户端组件</strong> (<code>&#39;use client&#39;</code>)：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-string">&#x27;use client&#x27;</span><br><span class="hljs-keyword">import</span> &#123; useSession &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-auth/react&#x27;</span><br><span class="hljs-keyword">import</span> &#123; signIn, signOut &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-auth/react&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">UserProfile</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// 获取当前 session 状态</span><br>  <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">data</span>: session, status &#125; = <span class="hljs-title function_">useSession</span>()<br>  <br>  <span class="hljs-comment">// 三种状态: &#x27;loading&#x27; | &#x27;authenticated&#x27; | &#x27;unauthenticated&#x27;</span><br>  <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&#x27;loading&#x27;</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  &#125;<br>  <br>  <span class="hljs-keyword">if</span> (session) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Welcome, &#123;session.user?.name&#125;!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Email: &#123;session.user?.email&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#123;session.user?.image&#125;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;Avatar&quot;</span> /&gt;</span></span><br><span class="language-xml">      </span><br><span class="language-xml">        &#123;/* 登出按钮 */&#125;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> signOut(&#123; callbackUrl: &#x27;/&#x27; &#125;)&#125;&gt;</span><br><span class="language-xml">          Sign Out</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>  &#125;<br>  <br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Please sign in<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">    </span><br><span class="language-xml">      &#123;/* 登录按钮 - 指定使用 Google 登录 */&#125;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> signIn(&#x27;google&#x27;, &#123; callbackUrl: &#x27;/dashboard&#x27; &#125;)&#125;&gt;</span><br><span class="language-xml">        Sign in with Google</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="📦-Session-对象结构"><a href="#📦-Session-对象结构" class="headerlink" title="📦 Session 对象结构"></a>📦 Session 对象结构</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Session</span> &#123;<br>  <span class="hljs-attr">user</span>: &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>;        <span class="hljs-comment">// 用户名</span><br>    <span class="hljs-attr">email</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>;       <span class="hljs-comment">// 邮箱</span><br>    <span class="hljs-attr">image</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>;       <span class="hljs-comment">// 头像 URL</span><br>    <span class="hljs-attr">id</span>?: <span class="hljs-built_in">string</span>;                <span class="hljs-comment">// 自定义字段 (需通过回调添加)</span><br>  &#125;;<br>  <span class="hljs-attr">expires</span>: <span class="hljs-built_in">string</span>;              <span class="hljs-comment">// 过期时间 (ISO 8601 格式)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2️⃣-服务端使用-Session-auth-函数"><a href="#2️⃣-服务端使用-Session-auth-函数" class="headerlink" title="2️⃣ 服务端使用 Session (auth() 函数)"></a>2️⃣ 服务端使用 Session (auth() 函数)</h3><p>适用于 <strong>Server Components</strong> 或 <strong>Server Actions</strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; auth &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/auth&#x27;</span><br><span class="hljs-keyword">import</span> &#123; redirect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/navigation&#x27;</span><br><br><span class="hljs-comment">// Server Component 示例</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">DashboardPage</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// 在服务端获取当前 session</span><br>  <span class="hljs-keyword">const</span> session = <span class="hljs-keyword">await</span> <span class="hljs-title function_">auth</span>()<br>  <br>  <span class="hljs-comment">// 如果未登录，重定向到登录页</span><br>  <span class="hljs-keyword">if</span> (!session?.<span class="hljs-property">user</span>) &#123;<br>    <span class="hljs-title function_">redirect</span>(<span class="hljs-string">&#x27;/auth/signin&#x27;</span>)<br>  &#125;<br>  <br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Welcome, &#123;session.user.name&#125;!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a protected page.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="💡-何时使用服务端-vs-客户端"><a href="#💡-何时使用服务端-vs-客户端" class="headerlink" title="💡 何时使用服务端 vs 客户端?"></a>💡 何时使用服务端 vs 客户端?</h4><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方式</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Server Component</td>
+<td><code>auth()</code></td>
+<td>无需额外 JS，SEO 友好</td>
+</tr>
+<tr>
+<td>Client Component</td>
+<td><code>useSession()</code></td>
+<td>需要交互性 (按钮点击等)</td>
+</tr>
+<tr>
+<td>Server Action</td>
+<td><code>auth()</code></td>
+<td>表单提交、数据变更</td>
+</tr>
+<tr>
+<td>Middleware</td>
+<td><code>getToken()</code></td>
+<td>路由保护</td>
+</tr>
+</tbody></table>
+<h3 id="3️⃣-手动触发登录-登出"><a href="#3️⃣-手动触发登录-登出" class="headerlink" title="3️⃣ 手动触发登录/登出"></a>3️⃣ 手动触发登录/登出</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; signIn, signOut &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-auth/react&#x27;</span><br><br><span class="hljs-comment">// ====== 登录 ======</span><br><br><span class="hljs-comment">// 方式 1: 使用默认登录页</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signIn</span>()<br><br><span class="hljs-comment">// 方式 2: 指定 OAuth 提供者</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signIn</span>(<span class="hljs-string">&#x27;google&#x27;</span>)                    <span class="hljs-comment">// Google 登录</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signIn</span>(<span class="hljs-string">&#x27;facebook&#x27;</span>)                  <span class="hljs-comment">// Facebook 登录</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signIn</span>(<span class="hljs-string">&#x27;credentials&#x27;</span>, &#123;            <span class="hljs-comment">// 邮箱密码登录</span><br>  <span class="hljs-attr">email</span>: <span class="hljs-string">&#x27;user@example.com&#x27;</span>,<br>  <span class="hljs-attr">password</span>: <span class="hljs-string">&#x27;password123&#x27;</span>,<br>  <span class="hljs-attr">redirect</span>: <span class="hljs-literal">false</span>  <span class="hljs-comment">// 不自动重定向，手动处理结果</span><br>&#125;)<br><br><span class="hljs-comment">// 方式 3: 指定登录成功后的跳转地址</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signIn</span>(<span class="hljs-string">&#x27;google&#x27;</span>, &#123; <span class="hljs-attr">callbackUrl</span>: <span class="hljs-string">&#x27;/dashboard&#x27;</span> &#125;)<br><br><span class="hljs-comment">// ====== 登出 ======</span><br><br><span class="hljs-comment">// 登出并跳转到首页</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signOut</span>(&#123; <span class="hljs-attr">callbackUrl</span>: <span class="hljs-string">&#x27;/&#x27;</span> &#125;)<br><br><span class="hljs-comment">// 仅登出不跳转</span><br><span class="hljs-keyword">await</span> <span class="hljs-title function_">signOut</span>(&#123; <span class="hljs-attr">redirect</span>: <span class="hljs-literal">false</span> &#125;)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🛡️-路由保护方案"><a href="#🛡️-路由保护方案" class="headerlink" title="🛡️ 路由保护方案"></a>🛡️ 路由保护方案</h2><h3 id="方案-1-客户端保护-适合-SPA-场景"><a href="#方案-1-客户端保护-适合-SPA-场景" class="headerlink" title="方案 1: 客户端保护 (适合 SPA 场景)"></a>方案 1: 客户端保护 (适合 SPA 场景)</h3><p>使用 <code>useSession</code> + 条件渲染/重定向：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// app/dashboard/page.tsx</span><br><span class="hljs-string">&#x27;use client&#x27;</span><br><span class="hljs-keyword">import</span> &#123; useSession &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-auth/react&#x27;</span><br><span class="hljs-keyword">import</span> &#123; useRouter &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/navigation&#x27;</span><br><span class="hljs-keyword">import</span> &#123; useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">Dashboard</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">data</span>: session, status &#125; = <span class="hljs-title function_">useSession</span>(&#123;<br>    <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-title function_">onUnauthenticated</span>(<span class="hljs-params"></span>) &#123;<br>      <span class="hljs-comment">// 未认证时重定向到登录页</span><br>      router.<span class="hljs-title function_">push</span>(<span class="hljs-string">&#x27;/auth/signin&#x27;</span>)<br>    &#125;,<br>  &#125;)<br><br>  <span class="hljs-keyword">const</span> router = <span class="hljs-title function_">useRouter</span>()<br><br>  <span class="hljs-comment">// 加载中显示 loading 状态</span><br>  <span class="hljs-keyword">if</span> (status === <span class="hljs-string">&#x27;loading&#x27;</span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;flex items-center justify-center min-h-screen&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>  &#125;<br><br>  <span class="hljs-comment">// 已认证，显示受保护内容</span><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;container mx-auto p-8&quot;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;text-3xl font-bold mb-4&quot;</span>&gt;</span>Dashboard<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Welcome back, &#123;session?.user?.name&#125;!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">    </span><br><span class="language-xml">      &#123;/* 受保护的 dashboard 内容 */&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="✅-优点"><a href="#✅-优点" class="headerlink" title="✅ 优点"></a>✅ 优点</h4><ul>
+<li>实现简单</li>
+<li>用户体验好 (无页面刷新)</li>
+<li>适合单页应用</li>
+</ul>
+<h4 id="❌-缺点"><a href="#❌-缺点" class="headerlink" title="❌ 缺点"></a>❌ 缺点</h4><ul>
+<li>安全性较低 (客户端可被绕过)</li>
+<li>需要 JavaScript 执行</li>
+</ul>
+<hr>
+<h3 id="方案-2-服务端保护-更安全，推荐"><a href="#方案-2-服务端保护-更安全，推荐" class="headerlink" title="方案 2: 服务端保护 (更安全，推荐)"></a>方案 2: 服务端保护 (更安全，推荐)</h3><p>使用 <code>auth()</code> + **中间件 (Middleware)**：</p>
+<h4 id="创建-middleware-ts-项目根目录"><a href="#创建-middleware-ts-项目根目录" class="headerlink" title="创建 middleware.ts (项目根目录)"></a>创建 <code>middleware.ts</code> (项目根目录)</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// middleware.ts</span><br><span class="hljs-keyword">export</span> &#123; <span class="hljs-keyword">default</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-auth/middleware&#x27;</span><br><br><span class="hljs-comment">// 配置需要认证的路由匹配规则</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> config = &#123;<br>  <span class="hljs-attr">matcher</span>: [<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     * 匹配所有以以下路径开头的请求:</span><br><span class="hljs-comment">     * - /dashboard (用户仪表板)</span><br><span class="hljs-comment">     * - /settings (设置页面)</span><br><span class="hljs-comment">     * - /protected (其他受保护页面)</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-string">&#x27;/dashboard/:path*&#x27;</span>,<br>    <span class="hljs-string">&#x27;/settings/:path*&#x27;</span>,<br>    <span class="hljs-string">&#x27;/protected/:path*&#x27;</span>,<br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><p>当用户访问匹配的路由时：</p>
+<ol>
+<li><strong>Middleware</strong> 拦截请求</li>
+<li>检查是否存在有效的 session</li>
+<li><strong>有 session</strong>: 正常放行，显示页面</li>
+<li><strong>无 session</strong>: 自动重定向到 <code>/auth/signin</code></li>
+</ol>
+<h4 id="✅-优点-1"><a href="#✅-优点-1" class="headerlink" title="✅ 优点"></a>✅ 优点</h4><ul>
+<li><strong>安全性高</strong> (服务端验证，无法绕过)</li>
+<li><strong>性能好</strong> (未认证时直接重定向，不加载页面内容)</li>
+<li><strong>SEO 友好</strong> (搜索引擎爬虫也会被拦截)</li>
+</ul>
+<h4 id="❌-缺点-1"><a href="#❌-缺点-1" class="headerlink" title="❌ 缺点"></a>❌ 缺点</h4><ul>
+<li>配置稍复杂</li>
+<li>需要理解 Middleware 匹配规则</li>
+</ul>
+<hr>
+<h3 id="方案-3-混合方案-推荐用于生产环境"><a href="#方案-3-混合方案-推荐用于生产环境" class="headerlink" title="方案 3: 混合方案 (推荐用于生产环境)"></a>方案 3: 混合方案 (推荐用于生产环境)</h3><p>结合两者的优势：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// app/dashboard/page.tsx</span><br><span class="hljs-keyword">import</span> &#123; auth &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/auth&#x27;</span><br><span class="hljs-keyword">import</span> &#123; redirect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/navigation&#x27;</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">DashboardClient</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./DashboardClient&#x27;</span><br><br><span class="hljs-comment">// Server Component: 服务端验证</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">DashboardPage</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> session = <span class="hljs-keyword">await</span> <span class="hljs-title function_">auth</span>()<br>  <br>  <span class="hljs-keyword">if</span> (!session?.<span class="hljs-property">user</span>) &#123;<br>    <span class="hljs-title function_">redirect</span>(<span class="hljs-string">&#x27;/auth/signin&#x27;</span>)<br>  &#125;<br>  <br>  <span class="hljs-comment">// 传递 session 数据给客户端组件</span><br>  <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">DashboardClient</span> <span class="hljs-attr">user</span>=<span class="hljs-string">&#123;session.user&#125;</span> &#125;</span></span><br><span class="hljs-tag"><span class="language-xml">&#125;</span></span><br><span class="hljs-tag"><span class="language-xml"></span></span><br><span class="hljs-tag"><span class="language-xml">// <span class="hljs-attr">DashboardClient.tsx</span> (<span class="hljs-attr">客户端组件</span>)</span></span><br><span class="hljs-tag"><span class="language-xml">&#x27;<span class="hljs-attr">use</span> <span class="hljs-attr">client</span>&#x27;</span></span><br><span class="hljs-tag"><span class="language-xml"><span class="hljs-attr">import</span> &#123; <span class="hljs-attr">useSession</span> &#125; <span class="hljs-attr">from</span> &#x27;<span class="hljs-attr">next-auth</span>/<span class="hljs-attr">react</span>&#x27;</span></span><br><span class="hljs-tag"><span class="language-xml"></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="hljs-attr">export</span> <span class="hljs-attr">function</span> <span class="hljs-attr">DashboardClient</span>(&#123; <span class="hljs-attr">user</span> &#125;<span class="hljs-attr">:</span> &#123; <span class="hljs-attr">user:</span> <span class="hljs-attr">any</span> &#125;) &#123;</span></span><br><span class="hljs-tag"><span class="language-xml">  // <span class="hljs-attr">可以在这里添加交互逻辑</span></span></span><br><span class="hljs-tag"><span class="language-xml">  <span class="hljs-attr">return</span> (</span></span><br><span class="hljs-tag"><span class="language-xml">    &lt;<span class="hljs-attr">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Welcome, &#123;user.name&#125;!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="language-xml">      &#123;/* 交互式内容 */&#125;</span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">  )</span><br><span class="language-xml">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="❓-常见问题与解决方案"><a href="#❓-常见问题与解决方案" class="headerlink" title="❓ 常见问题与解决方案"></a>❓ 常见问题与解决方案</h2><h3 id="Q1-登录后无法跳转到-dashboard"><a href="#Q1-登录后无法跳转到-dashboard" class="headerlink" title="Q1: 登录后无法跳转到 dashboard?"></a>Q1: 登录后无法跳转到 dashboard?</h3><p><strong>可能原因及解决方案</strong>:</p>
+<ol>
+<li><p><strong>NEXTAUTH_URL 未设置或错误</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># .env.local</span><br>NEXTAUTH_URL=http://localhost:3000  <span class="hljs-comment"># 本地开发</span><br>NEXTAUTH_URL=https://yourdomain.com  <span class="hljs-comment"># 生产环境</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>OAuth 回调 URL 配置错误</strong></p>
+<ul>
+<li>检查 Google/Facebook 控制台中的 <strong>Redirect URI</strong></li>
+<li>必须包含: <code>https://yourdomain.com/api/auth/callback/google</code></li>
+</ul>
+</li>
+<li><p><strong>查看浏览器控制台错误信息</strong></p>
+<ul>
+<li>打开 F12 Developer Tools</li>
+<li>查看 Network 标签页中的请求状态码</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="Q2-Google-登录报错-“redirect-uri-mismatch”"><a href="#Q2-Google-登录报错-“redirect-uri-mismatch”" class="headerlink" title="Q2: Google 登录报错 “redirect_uri_mismatch”?"></a>Q2: Google 登录报错 “redirect_uri_mismatch”?</h3><p><strong>解决方案</strong>:</p>
+<ol>
+<li><p>访问 <a target="_blank" rel="noopener" href="https://console.cloud.google.com/">Google Cloud Console</a></p>
+</li>
+<li><p>进入 <strong>APIs &amp; Services → Credentials</strong></p>
+</li>
+<li><p>编辑 OAuth 2.0 Client ID</p>
+</li>
+<li><p>在 <strong>Authorized redirect URIs</strong> 中添加:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">3000</span><span class="hljs-regexp">/api/</span>auth<span class="hljs-regexp">/callback/g</span>oogle   <span class="hljs-comment"># 开发环境</span><br>https:<span class="hljs-regexp">//y</span>ourdomain.com<span class="hljs-regexp">/api/</span>auth<span class="hljs-regexp">/callback/g</span>oogle <span class="hljs-comment"># 生产环境</span><br></code></pre></td></tr></table></figure></li>
+<li><p>保存后等待 <strong>几分钟</strong> 生效 (Google 配置有缓存)</p>
+</li>
+</ol>
+<hr>
+<h3 id="Q3-如何调整-Session-过期时间"><a href="#Q3-如何调整-Session-过期时间" class="headerlink" title="Q3: 如何调整 Session 过期时间?"></a>Q3: 如何调整 Session 过期时间?</h3><p>在 <code>auth.ts</code> 中修改配置：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-title class_">NextAuth</span>(&#123;<br>  <span class="hljs-attr">session</span>: &#123;<br>    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&#x27;jwt&#x27;</span>,<br>    <span class="hljs-attr">maxAge</span>: <span class="hljs-number">30</span> * <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span>,  <span class="hljs-comment">// 30 天 (默认)</span><br>    <span class="hljs-attr">updateAge</span>: <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span>,     <span class="hljs-comment">// 24 小时内活动自动续期</span><br>  &#125;,<br>  <span class="hljs-comment">// ...其他配置</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="常用过期时间配置"><a href="#常用过期时间配置" class="headerlink" title="常用过期时间配置"></a>常用过期时间配置</h4><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>maxAge 值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高安全应用</td>
+<td>1<em>60</em> 60 (1小时)</td>
+<td>银行、支付系统</td>
+</tr>
+<tr>
+<td>一般应用</td>
+<td>7<em>24</em> 60 * 60 (7天)</td>
+<td>社交网络、电商</td>
+</tr>
+<tr>
+<td>低安全需求</td>
+<td>30<em>24</em> 60 * 60 (30天)</td>
+<td>博客、资讯站</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="Q4-如何在生产环境禁用开发模式的硬编码登录"><a href="#Q4-如何在生产环境禁用开发模式的硬编码登录" class="headerlink" title="Q4: 如何在生产环境禁用开发模式的硬编码登录?"></a>Q4: 如何在生产环境禁用开发模式的硬编码登录?</h3><p>当前 <code>CredentialsProvider</code> 中的账号仅用于<strong>开发测试</strong>。生产环境禁用方法：</p>
+<p><strong>方法 1: 环境变量判断</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-title class_">CredentialsProvider</span>(&#123;<br>  <span class="hljs-comment">// ...其他配置</span><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">authorize</span>(<span class="hljs-params">credentials</span>) &#123;<br>    <span class="hljs-comment">// 仅在开发环境允许硬编码登录</span><br>    <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">&#x27;development&#x27;</span>) &#123;<br>      <span class="hljs-keyword">if</span> (credentials?.<span class="hljs-property">email</span> === <span class="hljs-string">&quot;admin@nocaped.com&quot;</span> &amp;&amp;<br>          credentials?.<span class="hljs-property">password</span> === <span class="hljs-string">&quot;password123&quot;</span>) &#123;<br>        <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Admin&quot;</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">&quot;admin@example.com&quot;</span> &#125;<br>      &#125;<br>    &#125;<br>  <br>    <span class="hljs-comment">// 生产环境: 查询数据库验证</span><br>    <span class="hljs-comment">// const user = await db.user.findUnique(&#123; where: &#123; email: credentials.email &#125; &#125;)</span><br>    <span class="hljs-comment">// if (user &amp;&amp; verifyPassword(credentials.password, user.password)) &#123;</span><br>    <span class="hljs-comment">//   return user</span><br>    <span class="hljs-comment">// &#125;</span><br>  <br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span><br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><strong>方法 2: 直接移除 CredentialsProvider</strong></p>
+<p>生产环境的 <code>auth.ts</code> 中删除 <code>CredentialsProvider</code> 即可。</p>
+<hr>
+<h3 id="Q5-如何添加数据库支持-持久化用户"><a href="#Q5-如何添加数据库支持-持久化用户" class="headerlink" title="Q5: 如何添加数据库支持 (持久化用户)?"></a>Q5: 如何添加数据库支持 (持久化用户)?</h3><p>推荐使用 <strong>Prisma + 数据库</strong>：</p>
+<h4 id="安装-Prisma"><a href="#安装-Prisma" class="headerlink" title="安装 Prisma"></a>安装 Prisma</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install prisma @prisma/client<br>npx prisma init<br></code></pre></td></tr></table></figure>
+
+<h4 id="定义数据模型-prisma-schema-prisma"><a href="#定义数据模型-prisma-schema-prisma" class="headerlink" title="定义数据模型 (prisma/schema.prisma)"></a>定义数据模型 (<code>prisma/schema.prisma</code>)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs prisma">model User &#123;<br>  id            String    @id @default(cuid())<br>  name          String?<br>  email         String    @unique<br>  emailVerified DateTime?<br>  image         String?<br>  password      String?   // 密码哈希 (仅 credentials 登录需要)<br>  accounts      Account[]<br>  sessions      Session[]<br>  createdAt     DateTime  @default(now())<br>  updatedAt     DateTime  @updatedAt<br>&#125;<br><br>model Account &#123;<br>  id                String  @id @default(cuid())<br>  userId            String<br>  type              String<br>  provider          String              // &quot;google&quot; | &quot;facebook&quot;<br>  providerAccountId String<br>  refresh_token     String? @db.Text<br>  access_token      String? @db.Text<br>  expires_at        Int?<br>  token_type        String?<br>  scope             String?<br>  id_token          String? @db.Text<br>  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)<br><br>  @@unique([provider, providerAccountId])<br>&#125;<br><br>model Session &#123;<br>  id           String   @id @default(cuid())<br>  sessionToken String   @unique<br>  userId       String<br>  expires      DateTime<br>  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)<br>&#125;<br><br>model VerificationToken &#123;<br>  identifier String<br>  token      String   @unique<br>  expires    DateTime<br><br>  @@unique([identifier, token])<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="适配-authorize-函数"><a href="#适配-authorize-函数" class="headerlink" title="适配 authorize 函数"></a>适配 authorize 函数</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">PrismaClient</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@prisma/client&#x27;</span><br><br><span class="hljs-keyword">const</span> prisma = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PrismaClient</span>()<br><br><span class="hljs-title class_">CredentialsProvider</span>(&#123;<br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">authorize</span>(<span class="hljs-params">credentials</span>) &#123;<br>    <span class="hljs-comment">// 查询数据库中的用户</span><br>    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> prisma.<span class="hljs-property">user</span>.<span class="hljs-title function_">findUnique</span>(&#123;<br>      <span class="hljs-attr">where</span>: &#123; <span class="hljs-attr">email</span>: credentials?.<span class="hljs-property">email</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span> &#125;<br>    &#125;)<br>  <br>    <span class="hljs-keyword">if</span> (!user || !user.<span class="hljs-property">password</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span><br>    &#125;<br>  <br>    <span class="hljs-comment">// 验证密码 (使用 bcrypt)</span><br>    <span class="hljs-keyword">const</span> isPasswordValid = <span class="hljs-keyword">await</span> <span class="hljs-title function_">compare</span>(<br>      credentials?.<span class="hljs-property">password</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>,<br>      user.<span class="hljs-property">password</span><br>    )<br>  <br>    <span class="hljs-keyword">if</span> (!isPasswordValid) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span><br>    &#125;<br>  <br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">id</span>: user.<span class="hljs-property">id</span>,<br>      <span class="hljs-attr">name</span>: user.<span class="hljs-property">name</span>,<br>      <span class="hljs-attr">email</span>: user.<span class="hljs-property">email</span>,<br>      <span class="hljs-attr">image</span>: user.<span class="hljs-property">image</span><br>    &#125;<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Q6-如何实现角色权限控制"><a href="#Q6-如何实现角色权限控制" class="headerlink" title="Q6: 如何实现角色权限控制?"></a>Q6: 如何实现角色权限控制?</h3><p>通过 <strong>JWT Callback</strong> 扩展 Token，再通过 <strong>Session Callback</strong> 传递给前端：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-title class_">NextAuth</span>(&#123;<br>  <span class="hljs-attr">callbacks</span>: &#123;<br>    <span class="hljs-comment">// JWT 回调: 在 token 中添加自定义字段</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-title function_">jwt</span>(<span class="hljs-params">&#123; token, user &#125;</span>) &#123;<br>      <span class="hljs-keyword">if</span> (user) &#123;<br>        <span class="hljs-comment">// 从数据库查询用户角色</span><br>        <span class="hljs-comment">// const dbUser = await prisma.user.findUnique(&#123; where: &#123; id: user.id &#125; &#125;)</span><br>        <span class="hljs-comment">// token.role = dbUser.role</span><br>      <br>        <span class="hljs-comment">// 或者从 user 对象中获取 (如果 authorize 返回了 role)</span><br>        token.<span class="hljs-property">role</span> = (user <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>).<span class="hljs-property">role</span> || <span class="hljs-string">&#x27;user&#x27;</span><br>      &#125;<br>      <span class="hljs-keyword">return</span> token<br>    &#125;,<br>  <br>    <span class="hljs-comment">// Session 回调: 将 token 中的角色传递给 session</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-title function_">session</span>(<span class="hljs-params">&#123; session, token &#125;</span>) &#123;<br>      <span class="hljs-keyword">if</span> (token &amp;&amp; session.<span class="hljs-property">user</span>) &#123;<br>        session.<span class="hljs-property">user</span>.<span class="hljs-property">role</span> = token.<span class="hljs-property">role</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span><br>      &#125;<br>      <span class="hljs-keyword">return</span> session<br>    &#125;,<br>  &#125;,<br>&#125;)<br><br><span class="hljs-comment">// 扩展 Session 类型 (全局类型声明)</span><br><span class="hljs-keyword">declare</span> <span class="hljs-variable language_">module</span> <span class="hljs-string">&quot;next-auth&quot;</span> &#123;<br>  <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Session</span> &#123;<br>    <span class="hljs-attr">user</span>: &#123;<br>      <span class="hljs-attr">id</span>?: <span class="hljs-built_in">string</span><br>      <span class="hljs-attr">role</span>?: <span class="hljs-built_in">string</span>  <span class="hljs-comment">// 新增角色字段</span><br>      <span class="hljs-attr">name</span>?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span><br>      <span class="hljs-attr">email</span>?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span><br>      <span class="hljs-attr">image</span>?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span><br>    &#125;<br>  &#125;<br>  <br>  <span class="hljs-keyword">interface</span> <span class="hljs-title class_">User</span> &#123;<br>    <span class="hljs-attr">role</span>?: <span class="hljs-built_in">string</span><br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">declare</span> <span class="hljs-variable language_">module</span> <span class="hljs-string">&quot;next-auth/jwt&quot;</span> &#123;<br>  <span class="hljs-keyword">interface</span> JWT &#123;<br>    <span class="hljs-attr">role</span>?: <span class="hljs-built_in">string</span>  <span class="hljs-comment">// JWT 中也添加角色</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="使用示例-基于角色的条件渲染"><a href="#使用示例-基于角色的条件渲染" class="headerlink" title="使用示例: 基于角色的条件渲染"></a>使用示例: 基于角色的条件渲染</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-string">&#x27;use client&#x27;</span><br><span class="hljs-keyword">import</span> &#123; useSession &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next-auth/react&#x27;</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">AdminPanel</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">data</span>: session &#125; = <span class="hljs-title function_">useSession</span>()<br>  <br>  <span class="hljs-comment">// 仅管理员可见</span><br>  <span class="hljs-keyword">if</span> (session?.<span class="hljs-property">user</span>?.<span class="hljs-property">role</span> !== <span class="hljs-string">&#x27;admin&#x27;</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Access Denied<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  &#125;<br>  <br>  <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Admin Panel Content<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🚀-生产环境部署注意事项"><a href="#🚀-生产环境部署注意事项" class="headerlink" title="🚀 生产环境部署注意事项"></a>🚀 生产环境部署注意事项</h2><h3 id="Vercel-部署-推荐"><a href="#Vercel-部署-推荐" class="headerlink" title="Vercel 部署 (推荐)"></a>Vercel 部署 (推荐)</h3><ol>
+<li><p><strong>连接 Git 仓库</strong></p>
+<ul>
+<li>访问 <a target="_blank" rel="noopener" href="https://vercel.com/">vercel.com</a></li>
+<li>导入你的 Git 仓库 (GitHub/GitLab/Bitbucket)</li>
+</ul>
+</li>
+<li><p><strong>配置环境变量</strong></p>
+<p>在 Vercel 项目 <strong>Settings → Environment Variables</strong> 中添加：</p>
+<figure class="highlight freedesktop"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs freedesktop"><span class="hljs-attr">AUTH_SECRET</span><span class="hljs-operator">=</span>&lt;generated-strong-random-string&gt;<br><span class="hljs-attr">NEXTAUTH_URL</span><span class="hljs-operator">=</span>https://your-domain.vercel.app<br><span class="hljs-attr">GOOGLE_CLIENT_ID</span><span class="hljs-operator">=</span>&lt;your-google-client-id&gt;<br><span class="hljs-attr">GOOGLE_CLIENT_SECRET</span><span class="hljs-operator">=</span>&lt;your-google-client-secret&gt;<br><span class="hljs-attr">FACEBOOK_CLIENT_ID</span><span class="hljs-operator">=</span>&lt;your-facebook-app-id&gt;<br><span class="hljs-attr">FACEBOOK_CLIENT_SECRET</span><span class="hljs-operator">=</span>&lt;your-facebook-app-secret&gt;<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>自动部署</strong></p>
+<ul>
+<li>Vercel 会自动检测 Next.js 并优化构建</li>
+<li>每次 <code>git push</code> 都会触发重新部署</li>
+</ul>
+</li>
+</ol>
+<h3 id="Docker-部署"><a href="#Docker-部署" class="headerlink" title="Docker 部署"></a>Docker 部署</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># Dockerfile</span><br><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS deps<br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> package*.json ./</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> npm ci</span><br><br><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS builder<br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=deps /app/node_modules ./node_modules</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> npm run build</span><br><br><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18</span>-alpine AS runner<br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span><br><span class="hljs-keyword">ENV</span> NODE_ENV=production<br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /app/public ./public</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /app/.next/standalone ./</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /app/.next/static ./.next/static</span><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3000</span><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;node&quot;</span>, <span class="hljs-string">&quot;server.js&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="⚠️-生产环境必检清单"><a href="#⚠️-生产环境必检清单" class="headerlink" title="⚠️ 生产环境必检清单"></a>⚠️ 生产环境必检清单</h3><ul>
+<li><input disabled="" type="checkbox"> <code>AUTH_SECRET</code> 使用强随机字符串 (至少 32 字符)</li>
+<li><input disabled="" type="checkbox"> <code>NEXTAUTH_URL</code> 设置为完整的 <strong>HTTPS</strong> URL</li>
+<li><input disabled="" type="checkbox"> OAuth 提供商的重定向 URI 与控制台配置<strong>完全匹配</strong></li>
+<li><input disabled="" type="checkbox"> 移除或禁用开发模式的硬编码登录凭证</li>
+<li><input disabled="" type="checkbox"> 数据库连接字符串使用<strong>环境变量</strong>，不硬编码</li>
+<li><input disabled="" type="checkbox"> 启用 HTTPS (Let’s Encrypt 免费证书)</li>
+<li><input disabled="" type="checkbox"> 配置 CORS (如果前后端分离部署)</li>
+<li><input disabled="" type="checkbox"> 设置 Cookie 安全属性 (SameSite, Secure, HttpOnly)</li>
+</ul>
+<hr>
+<h2 id="📊-性能优化建议"><a href="#📊-性能优化建议" class="headerlink" title="📊 性能优化建议"></a>📊 性能优化建议</h2><h3 id="1-减少-Bundle-大小"><a href="#1-减少-Bundle-大小" class="headerlink" title="1. 减少 Bundle 大小"></a>1. 减少 Bundle 大小</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// auth.ts - 按需导入 Provider</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">GoogleProvider</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;next-auth/providers/google&quot;</span><br><span class="hljs-comment">// 只导入你需要的 Provider，不要全部导入</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-Session-缓存策略"><a href="#2-Session-缓存策略" class="headerlink" title="2. Session 缓存策略"></a>2. Session 缓存策略</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-title class_">NextAuth</span>(&#123;<br>  <span class="hljs-attr">session</span>: &#123;<br>    <span class="hljs-attr">strategy</span>: <span class="hljs-string">&#x27;jwt&#x27;</span>,  <span class="hljs-comment">// JWT 比 Database session 更快 (无需查库)</span><br>  &#125;,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-图片优化"><a href="#3-图片优化" class="headerlink" title="3. 图片优化"></a>3. 图片优化</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs tsx"><span class="hljs-comment">// 用户头像使用 next/image 优化</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Image</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;next/image&#x27;</span><br><br>&lt;<span class="hljs-title class_">Image</span> <br>  src=&#123;session.<span class="hljs-property">user</span>?.<span class="hljs-property">image</span>&#125; <br>  alt=<span class="hljs-string">&quot;Avatar&quot;</span><br>  width=&#123;<span class="hljs-number">40</span>&#125;<br>  height=&#123;<span class="hljs-number">40</span>&#125;<br>  className=<span class="hljs-string">&quot;rounded-full&quot;</span><br>/&gt;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎯-总结"><a href="#🎯-总结" class="headerlink" title="🎯 总结"></a>🎯 总结</h2><p>通过本文的学习，你已经掌握了：</p>
+<p>✅ <strong>Next-Auth v5 的核心概念和配置</strong><br>✅ <strong>Google 和 Facebook OAuth 完整集成流程</strong><br>✅ <strong>Session 管理的最佳实践 (客户端/服务端)</strong><br>✅ <strong>多种路由保护方案及其优缺点</strong><br>✅ <strong>生产环境部署的关键注意事项</strong><br>✅ <strong>常见问题的排查思路和解决方案</strong></p>
+<h3 id="📚-延伸学习资源"><a href="#📚-延伸学习资源" class="headerlink" title="📚 延伸学习资源"></a>📚 延伸学习资源</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://next-auth.js.org/">Next-Auth 官方文档</a> - 最权威的参考资料</li>
+<li><a target="_blank" rel="noopener" href="https://oauth.net/2/">OAuth 2.0 规范</a> - 理解 OAuth 协议原理</li>
+<li><a target="_blank" rel="noopener" href="https://www.prisma.io/docs">Prisma 文档</a> - 数据库 ORM 最佳实践</li>
+<li><a target="_blank" rel="noopener" href="https://nextjs.org/docs/building-your-application/configuring/security-headers">Next.js Security</a> - 安全头配置</li>
+</ul>
+<h3 id="🔗-相关项目"><a href="#🔗-相关项目" class="headerlink" title="🔗 相关项目"></a>🔗 相关项目</h3><p>本文使用 Next-Auth 实现多方式登录的示例：</p>
+<ul>
+<li><strong>技术栈</strong>: Next.js 14 + React 18 + TypeScript 5 + Tailwind CSS</li>
+<li><strong>认证方式</strong>: Google OAuth + Facebook OAuth + Credentials</li>
+</ul>
+<hr>
+<h2 id="💬-交流与反馈"><a href="#💬-交流与反馈" class="headerlink" title="💬 交流与反馈"></a>💬 交流与反馈</h2><p>如果你在集成过程中遇到问题，欢迎：</p>
+<ul>
+<li>在 <strong>GitHub Issues</strong> 提交问题</li>
+<li>在评论区留言讨论</li>
+<li>查看项目的 <a href="./README.md#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">FAQ 文档</a></li>
+</ul>
+<p><strong>Happy Coding! 🎉</strong></p>
+<hr>
+<p><strong>最后更新</strong>: 2026-10-02<br><strong>文档版本</strong>: 1.0.0<br><strong>适用版本</strong>: <a href="mailto:&#x6e;&#x65;&#x78;&#116;&#45;&#x61;&#x75;&#x74;&#104;&#x40;&#53;&#46;&#x30;&#x2e;&#48;&#x2d;&#98;&#101;&#x74;&#x61;&#46;&#x32;&#x31;">&#x6e;&#x65;&#x78;&#116;&#45;&#x61;&#x75;&#x74;&#104;&#x40;&#53;&#46;&#x30;&#x2e;&#48;&#x2d;&#98;&#101;&#x74;&#x61;&#46;&#x32;&#x31;</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Next-js/">Next.js</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Next-Auth/">Next-Auth</a>
+                    
+                      <a class="hover-with-bg" href="/tags/OAuth/">OAuth</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95/">第三方登录</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A4%E8%AF%81/">认证</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/20260930/React-Rainbow-Menu%E7%BB%84%E4%BB%B6%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/">
+                        <span class="hidden-mobile">React Rainbow Menu 组件完全指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
