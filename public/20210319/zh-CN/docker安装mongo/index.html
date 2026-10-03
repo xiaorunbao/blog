@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-CN,en,default" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -56,7 +56,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":"G-3KQK0PX50F","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -113,6 +113,38 @@
                 <i class="iconfont icon-category-fill"></i>
                 react-rainbow-menu
               </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-language"></i>
+                language
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/zh-CN/">
+                    
+                    中文
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/en/">
+                    
+                    English
+                  </a>
+                
+              </div>
             </li>
           
         
@@ -229,13 +261,13 @@
 <ol>
 <li>查看防火墙状态</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo firewall-cmd --state<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> firewall-cmd --state<br></code></pre></td></tr></table></figure>
 
 <p><img src="20210323091547.png" srcset="/img/loading.gif" lazyload alt="显示状态"></p>
 <ol start="2">
 <li>查看指定端口是否开发</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo firewall-cmd --query-port=8080/tcp<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> firewall-cmd --query-port=8080/tcp<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>端口改为想要的端口</p>
@@ -244,7 +276,7 @@
 <ol start="3">
 <li>开发 mongo 默认端口</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo  firewall-cmd --zone=public --add-port=27017/tcp --permanent<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span>  firewall-cmd --zone=public --add-port=27017/tcp --permanent<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>permanent: 永久有效</p>
@@ -252,7 +284,7 @@
 <ol start="4">
 <li>查询端口状态</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo firewall-cmd --query-port=27017/tcp<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> firewall-cmd --query-port=27017/tcp<br></code></pre></td></tr></table></figure>
 
 <p><img src="20210323092306.png" srcset="/img/loading.gif" lazyload alt="显示状态"></p>
 
@@ -275,7 +307,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/20220317/Windows%E4%B8%8Agit%E6%8D%A2%E8%A1%8C%E7%AC%A6LF-CRLF%E9%97%AE%E9%A2%98/">
+                      <a href="/20220317/zh-CN/Windows%E4%B8%8Agit%E6%8D%A2%E8%A1%8C%E7%AC%A6LF-CRLF%E9%97%AE%E9%A2%98/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Windows上git换行符LF-CRLF问题</span>
                         <span class="visible-mobile">上一篇</span>
@@ -434,6 +466,34 @@
 
 
 
+  
+
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KQK0PX50F"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3KQK0PX50F');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+  
+<script src="/js/i18n-redirect.js"></script>
+<script src="/js/seo-i18n.js"></script>
+<script src="/js/ga-debug.js"></script>
 
 
 

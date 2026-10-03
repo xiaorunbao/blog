@@ -8,7 +8,9 @@ subtitle: ""
 description: ""
 keywords:
 author: xiaorunbao
-language: zh-CN
+language:
+  - zh-CN
+  - en
 timezone: "Asia/Shanghai"
 
 # URL
@@ -59,13 +61,19 @@ prismjs:
   tab_replace: ""
 
 # Home page setting
+# 首页设置 - 多语言配置
 # path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
+# per_page: Posts displayed per page. (0 to disable pagination)
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ""
   per_page: 10
   order_by: -date
+
+# 多语言配置说明：
+# 1. 中文首页访问路径：/zh-CN/ 或 / （根路径会自动跳转）
+# 2. 英文首页访问路径：/en/
+# 3. 首页文件位置：source/zh-CN/index.md 和 source/en/index.md
 
 # Category & Tag
 default_category: uncategorized

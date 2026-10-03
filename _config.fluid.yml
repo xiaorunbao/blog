@@ -193,6 +193,9 @@ font:
 # 指定自定义 .js 文件路径，支持列表；路径是相对 source 目录，如 /js/custom.js 对应存放目录 source/js/custom.js
 # Specify the path of your custom js file, support list. The path is relative to the source directory, such as `/js/custom.js` corresponding to the directory `source/js/custom.js`
 custom_js:
+  - /js/i18n-redirect.js  # 多语言自动检测与跳转
+  - /js/seo-i18n.js       # SEO 多语言优化（hreflang 标签）
+  - /js/ga-debug.js       # Google Analytics 调试工具（仅开发环境生效）
 
 # 指定自定义 .css 文件路径，用法和 custom_js 相同
 # The usage is the same as custom_js
@@ -209,22 +212,24 @@ custom_html: ""
 # 网页访问统计
 # Analysis of website visitors
 web_analytics: # 网页访问统计
-  enable: false
+  enable: true  # 启用网页访问统计
 
   # 百度统计的 Key，值需要获取下方链接中 `hm.js?` 后边的字符串
   # Baidu analytics, get the string behind `hm.js?`
   # See: https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376
   baidu:
 
-  # Google 统计的 Tracking ID
+  # Google 统计的 Tracking ID (旧版 Universal Analytics，已弃用)
   # Google analytics, set Tracking ID
   # See: https://developers.google.com/analytics/devguides/collection/analyticsjs
+  # 格式：UA-XXXXX-Y（不推荐使用，2023年已停止服务）
   google:
 
-  # Google gtag.js 的媒体资源 ID
+  # Google gtag.js 的媒体资源 ID (新版 Google Analytics 4，推荐使用)
   # Google gtag.js GA_MEASUREMENT_ID
   # See: https://developers.google.com/analytics/devguides/collection/gtagjs/
-  gtag:
+  # 格式：G-XXXXXXXXXX（从 Google Analytics 后台获取）
+  gtag: G-3KQK0PX50F  # ← 替换为你的实际 Measurement ID
 
   # 腾讯统计的 H5 App ID，开启高级功能才有cid
   # Tencent analytics, set APP ID
@@ -309,6 +314,12 @@ navbar:
         link: "/storybook/",
         icon: "iconfont icon-category-fill",
       }
+    # 语言切换菜单
+    - key: "language"
+      icon: "iconfont icon-language"
+      submenu:
+        - { name: "中文", link: "/zh-CN/" }
+        - { name: "English", link: "/en/" }
     # - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     # - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
     #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
