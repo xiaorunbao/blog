@@ -8,9 +8,7 @@ subtitle: ""
 description: ""
 keywords:
 author: xiaorunbao
-language:
-  - zh-CN
-  - en
+language: zh-CN
 timezone: "Asia/Shanghai"
 
 # URL
@@ -30,7 +28,6 @@ tag_dir: tags
 archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
-i18n_dir: :lang
 skip_render:
   - storybook/**/*
 
